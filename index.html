@@ -1,0 +1,828 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>充填溫度日報</title>
+<link rel="icon" href="data:image/png;base64,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">
+<style>
+:root{
+  --bg:#F6F6F4; --card:#FFFFFF; --ink:#2C2C2A; --sub:#6B6B66; --muted:#9A9A94;
+  --line:#E3E3DE; --accent:#1F4E79; --accent-soft:#EAF0F6; --accent-mid:#C9D7E6;
+  --pre:#B9B9B2; --red:#C62828;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);
+  font-family:"Segoe UI","Microsoft JhengHei","微軟正黑體","PingFang TC","Noto Sans TC","WenQuanYi Zen Hei",system-ui,sans-serif;
+  font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.num{font-variant-numeric:tabular-nums}
+[hidden]{display:none!important}
+header.top{background:var(--card);border-bottom:1px solid var(--line)}
+.top-in{max-width:1120px;margin:0 auto;padding-block:12px;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));display:flex;align-items:center;gap:14px}
+.top-in img{width:38px;height:auto}
+.top-in h1{font-size:20px;margin:0;font-weight:700;letter-spacing:.5px;line-height:1.3}
+.top-in .sub{color:var(--sub);font-size:12.5px}
+.top-in .right{margin-left:auto;color:var(--sub);font-size:12.5px;border:1px solid var(--line);border-radius:999px;padding:3px 12px}
+main{max-width:1120px;margin:0 auto;padding-block:28px 60px;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin-bottom:18px}
+
+/* ---------- 上傳區 ---------- */
+.steps{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 16px;color:var(--sub);font-size:14px}
+.steps .s{display:flex;align-items:center;gap:8px}
+.steps .n{width:24px;height:24px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:700;background:#fff;border:1px solid var(--line);color:var(--sub)}
+.steps .s.on{color:var(--ink);font-weight:600}
+.steps .s.on .n{background:var(--accent);border-color:var(--accent);color:#fff}
+.steps .arrow{width:28px;height:1px;background:var(--line)}
+.drop{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px;
+  min-height:250px;padding:34px 16px;border:2px dashed #C8CDD3;border-radius:14px;background:#FBFCFD;cursor:pointer;
+  transition:background .15s,border-color .15s}
+.drop:hover,.drop.over{background:var(--accent-soft);border-color:var(--accent)}
+.drop .ic{width:64px;height:64px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;margin-bottom:6px}
+.drop .ic svg{width:30px;height:30px}
+.drop .t1{font-size:19px;font-weight:700}
+.drop .or{color:var(--muted);font-size:13px}
+.drop .btn{display:inline-block;background:var(--ink);color:#fff;border-radius:8px;padding:9px 22px;font-weight:600;font-size:15px}
+.drop:hover .btn{background:#000}
+.drop .t2{color:var(--sub);font-size:12.5px;margin-top:8px;display:flex;gap:6px 14px;flex-wrap:wrap;justify-content:center}
+.drop .t2 span{display:inline-flex;align-items:center;gap:5px}
+.drop .t2 svg{width:14px;height:14px}
+.drop input{display:none}
+
+/* ---------- 上傳前確認（Excel 示意） ---------- */
+.guide h2{margin:0 0 4px;font-size:17px}
+.guide .lead{color:var(--sub);font-size:13.5px;margin-bottom:16px}
+.guide-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:24px;align-items:start}
+@media (max-width:880px){.guide-grid{grid-template-columns:1fr}}
+.xl{border:1px solid #D0D0CB;border-radius:8px;overflow:auto;background:#fff}
+.xl .bar{display:flex;align-items:center;gap:8px;padding:6px 10px;background:#F3F3F1;border-bottom:1px solid #D0D0CB;font-size:12px;color:var(--sub)}
+.xl .bar i{width:10px;height:10px;border-radius:2px;background:#1D6F42;display:inline-block}
+.xl table{border-collapse:collapse;width:100%;font-size:12.5px;font-variant-numeric:tabular-nums}
+.xl th,.xl td{border:1px solid #E1E1DC;padding:5px 8px;white-space:nowrap;height:30px}
+.xl td{text-align:center}
+.xl tr.colh th{background:#F3F3F1;color:var(--sub);font-weight:400;text-align:center;font-size:11.5px;height:24px}
+.xl tr.colh th.hl{background:#E4EAF1;color:var(--accent);font-weight:700}
+.xl tbody th{background:#F3F3F1;color:var(--sub);font-weight:400;text-align:right;width:44px;font-size:11.5px}
+.xl tr.gap th,.xl tr.gap td{height:18px;padding:0 8px;color:var(--muted);font-size:11px;background:#FAFAF8}
+.xl td{color:#55554F}
+.xl td.h{color:var(--ink);font-weight:600}
+.xl td.k{position:relative;font-weight:700;color:var(--ink);background:#EEF3F8;outline:2px solid var(--accent);outline-offset:-2px}
+.xl td.k.c1{background:#FFF6DB;outline-color:#B7860B}
+.xl td.k.c3{background:#EAF4EC;outline-color:#2E7D4F}
+.xl td.note{color:var(--muted);font-size:11.5px}
+.bd{position:absolute;top:-9px;left:-9px;width:18px;height:18px;border-radius:50%;font-size:11px;line-height:18px;text-align:center;color:#fff;background:var(--accent);font-weight:700;z-index:1}
+.c1 .bd,.rule.c1 .rn{background:#B7860B} .c3 .bd,.rule.c3 .rn{background:#2E7D4F}
+.rules{display:flex;flex-direction:column;gap:14px}
+.rule{display:flex;gap:12px}
+.rule .rn{flex:0 0 26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.rule h3{margin:0;font-size:15px}
+.rule p{margin:2px 0 0;color:var(--sub);font-size:13.5px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.chip{border:1px solid var(--accent-mid);background:var(--accent-soft);color:var(--accent);border-radius:6px;padding:1px 9px;font-size:12.5px;font-weight:600}
+.chip.e{border-color:#D6D6D0;background:#F6F6F4;color:var(--ink)}
+.rules .foot{border-top:1px dashed var(--line);padding-top:12px;color:var(--sub);font-size:13px}
+
+/* ---------- 錯誤 ---------- */
+.err{border:1px solid #F0C9C9;background:#FFFBFB}
+.err .eh{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.err .eh svg{width:24px;height:24px;color:var(--red);flex:none}
+.err h2{margin:0;font-size:18px;color:var(--red)}
+.err .lead{color:var(--sub);margin:0 0 14px 34px;font-size:14px}
+.err ol{margin:0 0 0 34px;padding-left:18px}
+.err li{margin:8px 0}
+.err .fix{color:var(--sub);font-size:13px}
+
+/* ---------- 結果 ---------- */
+.filebar{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px}
+.filebar .meta{display:flex;flex-wrap:wrap;gap:6px 26px;font-size:14px}
+.filebar .meta div{display:flex;flex-direction:column;line-height:1.35}
+.filebar .meta span{color:var(--sub);font-size:12px} .filebar .meta b{color:var(--ink);font-weight:600;font-size:15px}
+.filebar .btns{margin-left:auto;display:flex;gap:10px}
+button{font:inherit;cursor:pointer;border-radius:8px;padding:9px 18px;border:1px solid var(--line);background:#fff;color:var(--ink)}
+button:hover{border-color:#BDBDB6}
+button.primary{background:var(--ink);border-color:var(--ink);color:#fff;font-weight:600}
+button.primary:hover{background:#000}
+button:disabled{opacity:.55;cursor:wait}
+button.link{border:none;background:none;color:var(--accent);padding:6px 0;font-size:14px}
+button.link:hover{text-decoration:underline}
+.item-h{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin-bottom:4px}
+.item-h h2{margin:0;font-size:20px;color:var(--accent)}
+.item-h .info{color:var(--sub);font-size:14px}
+.item-h .warn{color:var(--red);font-size:14px;font-weight:600}
+.legend{display:flex;flex-wrap:wrap;gap:4px 18px;font-size:12.5px;color:var(--sub);margin:4px 0 6px}
+.legend i{display:inline-block;vertical-align:middle;margin-right:6px}
+.lg-fill{width:18px;height:3px;background:var(--accent);border-radius:2px}
+.lg-pre{width:18px;height:2px;background:var(--pre)}
+.lg-dot{width:8px;height:8px;border-radius:50%;background:var(--red)}
+.lg-std{width:18px;height:0;border-top:2px dashed var(--red)}
+.lg-band{width:14px;height:12px;background:var(--accent-soft);border:1px solid var(--accent-mid)}
+.chart{position:relative;width:100%}
+.chart canvas{display:block;width:100%}
+.tip{position:absolute;pointer-events:none;background:#fff;border:1px solid var(--line);border-radius:8px;
+  padding:6px 10px;font-size:13px;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,.08);display:none;z-index:2}
+.tip .tv{font-weight:700} .tip .bad{color:var(--red)}
+table.trips{width:100%;border-collapse:collapse;margin-top:12px;font-size:14px}
+table.trips th{color:var(--sub);font-weight:600;font-size:12.5px;padding:8px 10px;text-align:center;border-top:2px solid var(--ink);border-bottom:1px solid var(--ink)}
+table.trips td{padding:7px 10px;text-align:center;border-bottom:1px solid #EEEEEA}
+table.trips tr:last-child td{border-bottom:2px solid var(--ink)}
+td.bad{color:var(--red);font-weight:700}
+.tablewrap{overflow-x:auto}
+.redlist{margin-top:12px;font-size:13.5px}
+.redlist .row{margin:4px 0}
+.redlist .lab{color:var(--red);font-weight:600;margin-right:8px}
+.redlist .v{display:inline-block;margin:2px 10px 2px 0;color:var(--ink)}
+.redlist .v b{color:var(--red)}
+.zoom{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:12px}
+.zoom .z{border:1px solid var(--line);border-radius:10px;padding:10px 12px 6px}
+.zoom .zt{font-size:14px;font-weight:600}
+.zoom .zt.bad{color:var(--red)}
+@media (max-width:760px){.zoom{grid-template-columns:1fr}.filebar .btns{margin-left:0}}
+.busy{position:fixed;inset:0;background:rgba(246,246,244,.75);display:none;align-items:center;justify-content:center;z-index:10;font-size:16px}
+.busy.on{display:flex}
+.pdfmsg{flex-basis:100%;text-align:right;color:var(--sub);font-size:13px;min-height:1px}
+footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px}
+</style>
+</head>
+<body>
+<header class="top"><div class="top-in">
+  <img src="data:image/png;base64,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" alt="五惠食品 Logo">
+  <div><h1>充填溫度日報</h1><div class="sub">PE袋充填機・進料端溫度紀錄</div></div>
+  <div class="right">測試版・尚未接登入</div>
+</div></header>
+
+<main>
+  <section id="uploadCard">
+    <div class="steps">
+      <div class="s on"><span class="n">1</span>上傳溫度紀錄檔</div><span class="arrow"></span>
+      <div class="s"><span class="n">2</span>檢查與預覽</div><span class="arrow"></span>
+      <div class="s"><span class="n">3</span>下載 PDF 日報</div>
+    </div>
+    <div class="card" style="padding:16px">
+      <label class="drop" id="drop">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4"/><path d="m7 9 5-5 5 5"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg></span>
+        <span class="t1">把已標註好的 Excel 檔拖曳到這裡</span>
+        <span class="or">或</span>
+        <span class="btn">選擇檔案</span>
+        <span class="t2">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg>支援 .xlsx／.csv</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>檔案只在這台電腦處理，不會上傳到網路</span>
+        </span>
+        <input type="file" id="file" accept=".xlsx,.csv">
+      </label>
+    </div>
+  </section>
+
+  <section id="out"></section>
+
+  <section class="card guide" id="guide">
+    <h2>上傳前，請在 Excel 確認 3 件事</h2>
+    <div class="lead">依現場充填紀錄標註即可；缺少任何一項，系統會指出第幾列，修正後重新上傳。</div>
+    <div class="guide-grid">
+      <div class="xl">
+        <div class="bar"><i></i>範例：2026-10-14.xlsx</div>
+        <table>
+          <tr class="colh"><th></th><th>A</th><th>B</th><th>C</th><th class="hl">D</th><th class="hl">E</th></tr>
+          <tbody>
+          <tr><th>1</th><td class="h">日期</td><td class="h">時間</td><td class="h">AI1</td><td class="h">基準值</td><td class="h">品項</td></tr>
+          <tr><th>2</th><td></td><td></td><td>瞬間值</td><td class="k c1">≥80<b class="bd">1</b></td><td></td></tr>
+          <tr><th>3</th><td>10/14/26</td><td>05:40:45</td><td></td><td></td><td></td></tr>
+          <tr class="gap"><th>⋮</th><td colspan="5">⋮</td></tr>
+          <tr><th>1987</th><td>10/14/26</td><td>08:26:05</td><td>82.6</td><td class="k">S<b class="bd">2</b></td><td class="k c3">D0111<b class="bd">3</b></td></tr>
+          <tr class="gap"><th>⋮</th><td colspan="5">⋮　第 1 趟充填中</td></tr>
+          <tr><th>2136</th><td>10/14/26</td><td>08:38:30</td><td>89.1</td><td class="k">E</td><td></td></tr>
+          <tr class="gap"><th>⋮</th><td colspan="5">⋮</td></tr>
+          <tr><th>2378</th><td>10/14/26</td><td>08:58:40</td><td>80.0</td><td class="k">S</td><td class="note">同品項不用再填</td></tr>
+          <tr class="gap"><th>⋮</th><td colspan="5">⋮</td></tr>
+          <tr><th>3764</th><td>10/14/26</td><td>10:54:10</td><td>81.3</td><td class="k">S</td><td class="k c3">D0310(A)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="rules">
+        <div class="rule c1"><span class="rn">1</span><div><h3>D2 填標準值</h3><p>例如 <b>≥80</b>（大於等於 80°C 為正常）。</p></div></div>
+        <div class="rule"><span class="rn">2</span><div><h3>D 欄標註每一趟的開始與結束</h3><p>開始、結束要成對，標在充填開始與結束的那一列。以下寫法都可以，大小寫不拘：</p>
+          <div class="chips"><span class="chip">開始</span><span class="chip">S</span><span class="chip">START</span><span class="chip e">結束</span><span class="chip e">E</span><span class="chip e">END</span></div></div></div>
+        <div class="rule c3"><span class="rn">3</span><div><h3>E 欄填品項</h3><p>只填在該品項<b>第一趟的開始列</b>；同品項後面幾趟不用再填，換品項時再填新品項。</p></div></div>
+        <div class="foot">D 欄第 3 列以下只放開始／結束標記，其他文字或數字請刪除。</div>
+      </div>
+    </div>
+  </section>
+  <footer>五惠食品 品保課　｜　充填溫度日報</footer>
+</main>
+<div class="busy" id="busy">處理中，請稍候…</div>
+
+<script>
+"use strict";
+const CFG = { title:"PE袋充填機 進料端溫度紀錄日報", org:"五惠食品　品保課", point:"PE袋充填機 進料端（AI1）",
+  startTokens:["開始","S","START"], endTokens:["結束","E","END"] };
+const C = {ink:"#2C2C2A",sub:"#6B6B66",muted:"#9A9A94",line:"#E3E3DE",grid:"#ECECE7",frame:"#BEBEB7",
+  accent:"#1F4E79",band:"rgba(31,78,121,0.07)",bandEdge:"rgba(31,78,121,0.28)",pre:"#B5B5AE",red:"#C62828",bg:"#F6F6F4"};
+const FONT = '"Segoe UI","Microsoft JhengHei","微軟正黑體","PingFang TC","Noto Sans TC","WenQuanYi Zen Hei",sans-serif';
+const LOGO = "data:image/png;base64,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";
+
+/* ============================== 小工具 ============================== */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const pad2 = n => String(n).padStart(2,"0");
+const DAY = 86400000;
+function fmtTime(ms){ const d=new Date(ms); return pad2(d.getUTCHours())+":"+pad2(d.getUTCMinutes())+":"+pad2(d.getUTCSeconds()); }
+function fmtHM(ms){ const d=new Date(ms); return pad2(d.getUTCHours())+":"+pad2(d.getUTCMinutes()); }
+function fmtDate(ms){ const d=new Date(ms); return d.getUTCFullYear()+"-"+pad2(d.getUTCMonth()+1)+"-"+pad2(d.getUTCDate()); }
+function fmtDur(ms){ const s=Math.round(ms/1000); return Math.floor(s/60)+"分"+pad2(s%60)+"秒"; }
+function f1(v){ return v==null?"—":v.toFixed(1); }
+function half(s){ // 全形轉半形
+  return String(s).replace(/[！-～]/g, c=>String.fromCharCode(c.charCodeAt(0)-0xFEE0)).replace(/　/g," ");
+}
+function nowStr(){ const d=new Date(); return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate())+" "+pad2(d.getHours())+":"+pad2(d.getMinutes()); }
+
+/* ============================== 讀 xlsx（免外掛） ============================== */
+async function unzip(buf){
+  const u8=new Uint8Array(buf), dv=new DataView(buf);
+  let eocd=-1;
+  for(let i=u8.length-22;i>=Math.max(0,u8.length-66000);i--){ if(dv.getUint32(i,true)===0x06054b50){eocd=i;break;} }
+  if(eocd<0) throw new Error("不是有效的 .xlsx 檔（請另存為 Excel 活頁簿 .xlsx）");
+  const n=dv.getUint16(eocd+10,true); let p=dv.getUint32(eocd+16,true);
+  const files={};
+  for(let k=0;k<n;k++){
+    if(dv.getUint32(p,true)!==0x02014b50) break;
+    const method=dv.getUint16(p+10,true), csize=dv.getUint32(p+20,true);
+    const nl=dv.getUint16(p+28,true), el=dv.getUint16(p+30,true), cl=dv.getUint16(p+32,true), lo=dv.getUint32(p+42,true);
+    const name=new TextDecoder().decode(u8.subarray(p+46,p+46+nl));
+    const lnl=dv.getUint16(lo+26,true), lel=dv.getUint16(lo+28,true);
+    const start=lo+30+lnl+lel;
+    files[name]={method,data:u8.subarray(start,start+csize)};
+    p+=46+nl+el+cl;
+  }
+  return {
+    has:name=>!!files[name],
+    async text(name){
+      const f=files[name]; if(!f) return null;
+      if(f.method===0) return new TextDecoder().decode(f.data);
+      if(f.method!==8) throw new Error("不支援的壓縮格式");
+      const s=new Blob([f.data]).stream().pipeThrough(new DecompressionStream("deflate-raw"));
+      return await new Response(s).text();
+    }
+  };
+}
+const NS="*";
+function xml(s){ return new DOMParser().parseFromString(s,"application/xml"); }
+function tags(node,name){ return node.getElementsByTagNameNS(NS,name); }
+function colIdx(ref){ let c=0; for(const ch of ref){ const x=ch.charCodeAt(0); if(x<65||x>90) break; c=c*26+(x-64);} return c-1; }
+
+async function readXlsx(buf){
+  const z=await unzip(buf);
+  const wb=xml(await z.text("xl/workbook.xml"));
+  const rels=xml(await z.text("xl/_rels/workbook.xml.rels"));
+  const relMap={}; for(const r of tags(rels,"Relationship")) relMap[r.getAttribute("Id")]=r.getAttribute("Target");
+  let ss=[];
+  const sst=await z.text("xl/sharedStrings.xml");
+  if(sst){ for(const si of tags(xml(sst),"si")){ let t=""; for(const te of tags(si,"t")){ if(te.parentNode.localName!=="rPh") t+=te.textContent; } ss.push(t);} }
+  const sheets=[];
+  for(const sh of tags(wb,"sheet")){
+    const rid=sh.getAttribute("r:id")||sh.getAttributeNS("http://schemas.openxmlformats.org/officeDocument/2006/relationships","id");
+    let tgt=relMap[rid]; if(!tgt) continue;
+    tgt=tgt.startsWith("/")?tgt.slice(1):("xl/"+tgt);
+    const doc=xml(await z.text(tgt));
+    const rows=new Map();
+    for(const c of tags(doc,"c")){
+      const ref=c.getAttribute("r"); if(!ref) continue;
+      const ci=colIdx(ref); if(ci>8) continue;
+      const rn=parseInt(ref.replace(/^[A-Z]+/,""),10);
+      const t=c.getAttribute("t"); const vEl=tags(c,"v")[0];
+      let v=null;
+      if(t==="s"){ if(vEl) v=ss[+vEl.textContent]??null; }
+      else if(t==="inlineStr"){ v=Array.from(tags(c,"t")).map(e=>e.textContent).join(""); }
+      else if(t==="str"||t==="e"){ v=vEl?vEl.textContent:null; }
+      else if(t==="b"){ v=vEl?(vEl.textContent==="1"):null; }
+      else if(t==="d"){ v=vEl?{iso:vEl.textContent}:null; }
+      else { if(vEl&&vEl.textContent!=="") v=parseFloat(vEl.textContent); }
+      if(v===""||v==null) continue;
+      if(!rows.has(rn)) rows.set(rn,[]);
+      rows.get(rn)[ci]=v;
+    }
+    sheets.push({name:sh.getAttribute("name"),rows});
+  }
+  return sheets;
+}
+function readCsv(text){
+  const rows=new Map(); const lines=text.replace(/^﻿/,"").split(/\r?\n/);
+  lines.forEach((ln,i)=>{ if(!ln.trim()) return;
+    const cells=[]; let cur="",q=false;
+    for(let k=0;k<ln.length;k++){ const ch=ln[k];
+      if(q){ if(ch==='"'){ if(ln[k+1]==='"'){cur+='"';k++;} else q=false; } else cur+=ch; }
+      else if(ch==='"') q=true; else if(ch===','){cells.push(cur);cur="";} else cur+=ch; }
+    cells.push(cur);
+    rows.set(i+1,cells.map(s=>{ s=s.trim(); if(s==="") return undefined; return /^-?\d+(\.\d+)?$/.test(s)?parseFloat(s):s; }));
+  });
+  return [{name:"CSV",rows}];
+}
+
+/* ============================== 日期時間 ============================== */
+function excelDayToMs(n){ return Math.round((n-25569)*DAY); }        // Excel 序號 → UTC ms
+function parseDate(v){
+  if(v==null) return null;
+  if(typeof v==="number") return v>=1?excelDayToMs(Math.floor(v)):null;
+  if(typeof v==="object"&&v.iso){ const d=new Date(v.iso+"Z"); return isNaN(d)?null:Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate()); }
+  const s=half(v).trim(); let m;
+  if((m=s.match(/^(\d{4})[\/\-.](\d{1,2})[\/\-.](\d{1,2})/))) return Date.UTC(+m[1],+m[2]-1,+m[3]);
+  if((m=s.match(/^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{2,4})/))){ let y=+m[3]; if(y<100) y+=2000; return Date.UTC(y,+m[1]-1,+m[2]); } // 記錄器格式：月/日/年
+  return null;
+}
+function parseTime(v){ // 回傳一天中的 ms；若含日期回傳 {abs}
+  if(v==null) return null;
+  if(typeof v==="number"){ if(v<1) return Math.round(v*DAY); return {abs:excelDayToMs(v)}; }
+  if(typeof v==="object"&&v.iso){ const d=new Date(v.iso+"Z"); return isNaN(d)?null:{abs:d.getTime()}; }
+  const m=half(v).trim().match(/^(?:上午|下午)?\s*(\d{1,2}):(\d{2})(?::(\d{2}))?\s*(AM|PM)?$/i);
+  if(!m) return null; let h=+m[1]; const pm=/PM/i.test(m[4]||"")||/下午/.test(v); if(pm&&h<12) h+=12; if(/AM/i.test(m[4]||"")&&h===12) h=0;
+  return ((h*60+(+m[2]))*60+(+(m[3]||0)))*1000;
+}
+function parseStd(v){
+  if(v==null) return null;
+  const s=half(String(v)).replace(/\s|°|℃|C|度|以上/gi,"");
+  const m=s.match(/^(≥|>=|=>|≧|>|＞)?(-?\d+(?:\.\d+)?)$/);
+  if(!m) return null;
+  const op=(m[1]===">")?"gt":"ge";
+  return {value:+m[2],op,label:(op==="gt"?">":"≥")+(+m[2])};
+}
+
+/* ============================== 解析與檢查 ============================== */
+const normTok = v => half(String(v)).trim().toUpperCase();
+const isStart = v => v!=null && CFG.startTokens.includes(normTok(v));
+const isEnd   = v => v!=null && CFG.endTokens.includes(normTok(v));
+
+function findCols(sh){
+  const h=sh.rows.get(1)||[]; const col={date:0,time:1,temp:2,mark:3,item:4};
+  h.forEach((x,i)=>{ if(x==null) return; const s=half(String(x)).trim();
+    if(/日期/.test(s)) col.date=i; else if(/時間/.test(s)) col.time=i;
+    else if(/^AI\d|溫度/i.test(s)) col.temp=i; else if(/基準|標準|標記/.test(s)) col.mark=i; else if(/品項|品名/.test(s)) col.item=i; });
+  return col;
+}
+function rangesText(nums){ // [5,6,7,10] → "第5～7列、第10列"
+  const out=[]; let a=nums[0],b=a;
+  for(let i=1;i<=nums.length;i++){ const x=nums[i]; if(x===b+1){b=x;continue;} out.push(a===b?`第 ${a} 列`:`第 ${a}～${b} 列`); a=b=x; }
+  return out.length>6?out.slice(0,6).join("、")+` 等 ${out.length} 處`:out.join("、");
+}
+
+function analyze(sheets){
+  const errors=[];
+  // 1. 找出有 S/E 標註的工作表
+  const cand=sheets.map(sh=>{ const col=findCols(sh); let n=0, temps=0;
+    for(const [r,row] of sh.rows){ if(r<3) continue; if(isStart(row[col.mark])||isEnd(row[col.mark])) n++; if(typeof row[col.temp]==="number") temps++; }
+    return {sh,col,n,temps}; });
+  const marked=cand.filter(c=>c.n>0);
+  if(marked.length===0){
+    return {errors:[{msg:"檔案中找不到任何「開始／結束」標註。",fix:"請依現場充填紀錄，在 D 欄標註每一趟的開始與結束列（開始／結束、S／E、START／END 皆可）。"}]};
+  }
+  if(marked.length>1){
+    return {errors:[{msg:`有 ${marked.length} 個工作表都有開始／結束標註：${marked.map(c=>"「"+c.sh.name+"」").join("、")}。`,fix:"請只保留一個工作表的標註，避免系統讀錯資料。"}]};
+  }
+  const {sh,col}=marked[0];
+  // 2. 標準值
+  const std=parseStd((sh.rows.get(2)||[])[col.mark]);
+  if(!std) errors.push({msg:"D2 沒有填寫標準值，或格式無法辨識。",fix:"請在 D2 填入標準值，例如「≥80」。"});
+  // 3. 逐列讀資料
+  const R=[]; let baseDate=null, unknown=[], badDate=[];
+  const rnums=[...sh.rows.keys()].filter(r=>r>=3).sort((a,b)=>a-b);
+  for(const r of rnums){
+    const row=sh.rows.get(r);
+    const tRaw=row[col.time], dRaw=row[col.date];
+    let t=null; const pt=parseTime(tRaw);
+    if(pt&&typeof pt==="object") t=pt.abs;
+    else if(pt!=null){ const d=parseDate(dRaw); if(d!=null){ t=d+pt; baseDate=baseDate??d; } else if(dRaw!=null) badDate.push(r); }
+    if(t==null && tRaw==null && dRaw==null && row[col.temp]==null) continue; // 空列
+    const v=typeof row[col.temp]==="number"?row[col.temp]:null;
+    const mk=row[col.mark], it=row[col.item];
+    if(mk!=null && !isStart(mk) && !isEnd(mk)) unknown.push({r,mk});
+    R.push({r,t,v,start:isStart(mk),end:isEnd(mk),item:it!=null?half(String(it)).trim():null});
+  }
+  if(baseDate==null && R.length) baseDate=R.find(x=>x.t!=null)?.t;
+  if(badDate.length) errors.push({msg:`日期無法辨識：${rangesText(badDate)}。`,fix:"日期格式應為記錄器原始格式（月/日/年，例：10/14/26）。"});
+  if(unknown.length){
+    const vals=[...new Set(unknown.map(u=>String(u.mk)))].slice(0,4).map(s=>"「"+s+"」").join("、");
+    errors.push({msg:`D 欄有無法辨識的標記 ${vals}：${rangesText(unknown.map(u=>u.r))}。`,fix:"D 欄（第 3 列以下）只能填開始／結束標記，其他內容請刪除。"});
+  }
+  // 4. 配對開始／結束、品項
+  const trips=[]; let open=null, curItem=null, pendingItem=null;
+  for(let i=0;i<R.length;i++){
+    const x=R[i];
+    if(x.item!=null){
+      if(x.start||!open){ pendingItem=x.item; }
+      else errors.push({msg:`第 ${x.r} 列的品項「${x.item}」填在充填段中間。`,fix:"品項請填在該品項第一趟的「開始」那一列。"});
+    }
+    if(x.start){
+      if(open){ errors.push({msg:`第 ${R[open.i].r} 列有「開始」，但到第 ${x.r} 列下一個「開始」之前都沒有「結束」。`,fix:"請補上這一趟的「結束」標記。"}); }
+      if(pendingItem!=null){ curItem=pendingItem; pendingItem=null; }
+      if(curItem==null){ errors.push({msg:`第 ${x.r} 列（${x.t!=null?fmtTime(x.t):""}）是第一趟的開始，但 E 欄沒有填品項。`,fix:"請在該品項第一趟「開始」那一列的 E 欄填入品項。"}); curItem="（未填品項）"; }
+      open={i,item:curItem};
+    }
+    if(x.end){
+      if(x.start){ errors.push({msg:`第 ${x.r} 列同時是開始與結束。`,fix:"開始與結束請標在不同列。"}); open=null; continue; }
+      if(!open){ errors.push({msg:`第 ${x.r} 列有「結束」，但前面沒有對應的「開始」。`,fix:"請補上這一趟的「開始」標記，或刪除多餘的「結束」。"}); continue; }
+      trips.push({s:open.i,e:i,item:open.item}); open=null;
+    }
+  }
+  if(open) errors.push({msg:`第 ${R[open.i].r} 列有「開始」，但後面沒有「結束」。`,fix:"請補上這一趟的「結束」標記。"});
+  // 5. 充填段資料完整性
+  const diffs=[]; for(let i=1;i<R.length;i++) if(R[i].t!=null&&R[i-1].t!=null) diffs.push(R[i].t-R[i-1].t);
+  diffs.sort((a,b)=>a-b); const step=diffs.length?diffs[Math.floor(diffs.length/2)]:5000;
+  for(const tp of trips){
+    const miss=[], gaps=[];
+    for(let i=tp.s;i<=tp.e;i++){
+      if(R[i].v==null||R[i].t==null) miss.push(R[i].r);
+      if(i>tp.s&&R[i].t!=null&&R[i-1].t!=null){ const d=R[i].t-R[i-1].t; if(d>step*1.5||d<=0) gaps.push(`第 ${R[i-1].r}～${R[i].r} 列（${fmtTime(R[i-1].t)} → ${fmtTime(R[i].t)}）`); }
+    }
+    if(miss.length) errors.push({msg:`充填段（第 ${R[tp.s].r}～${R[tp.e].r} 列）缺少溫度或時間：${rangesText(miss)}。`,fix:"記錄器可能漏記，請確認原始資料後重新上傳。"});
+    if(gaps.length) errors.push({msg:`充填段時間不連續：${gaps.slice(0,3).join("、")}${gaps.length>3?` 等 ${gaps.length} 處`:""}。`,fix:"記錄器可能中斷，請確認原始資料後重新上傳。"});
+  }
+  if(!trips.length&&!errors.length) errors.push({msg:"沒有找到完整的充填段。",fix:"請確認開始／結束標記。"});
+  if(errors.length) return {errors};
+  // 6. 統計
+  const below = v => std.op==="gt" ? v<=std.value : v<std.value;
+  const groups=[];
+  for(const tp of trips){
+    let g=groups[groups.length-1];
+    if(!g||g.item!==tp.item){ const same=groups.filter(x=>x.baseItem===tp.item).length; g={item:same?`${tp.item}（第${same+1}段）`:tp.item,baseItem:tp.item,trips:[]}; groups.push(g); }
+    const vs=[],red=[]; for(let i=tp.s;i<=tp.e;i++){ vs.push(R[i].v); if(below(R[i].v)) red.push(i); }
+    tp.n=g.trips.length+1; tp.max=Math.max(...vs); tp.min=Math.min(...vs); tp.avg=vs.reduce((a,b)=>a+b,0)/vs.length;
+    tp.red=red; tp.group=g; g.trips.push(tp);
+  }
+  const firstT=R.find(x=>x.v!=null)?.t ?? R[0].t;
+  return {errors:[],sheet:sh.name,std,R,trips,groups,below,step,date:fmtDate(Math.floor(firstT/DAY)*DAY)};
+}
+
+
+
+/* ============================== 繪圖（螢幕與 PDF 共用） ============================== */
+function niceStep(range,target){ const raw=range/target; const p=Math.pow(10,Math.floor(Math.log10(raw))); for(const m of [1,2,5,10]) if(m*p>=raw) return m*p; return 10*p; }
+function drawChart(ctx,box,A,o){
+  // o: {i0,i1,trips,labels,k,labelOf,annotateMin,xTitle}
+  const R=A.R, k=o.k||1;
+  const P={l:54*k,r:12*k,t:(o.labels?22:10)*k,b:(o.xTitle?38:26)*k};
+  const X0=box.x+P.l, X1=box.x+box.w-P.r, Y0=box.y+P.t, Y1=box.y+box.h-P.b;
+  const tA=R[o.i0].t, tB=R[o.i1].t;
+  let lo=Infinity,hi=-Infinity; for(let i=o.i0;i<=o.i1;i++){const v=R[i].v; if(v!=null){ if(v<lo)lo=v; if(v>hi)hi=v; }}
+  lo=Math.min(lo,A.std.value); hi=Math.max(hi,A.std.value);
+  const ys=niceStep(Math.max(hi-lo,2),(Y1-Y0)>200*k?6:4);
+  const yLo=Math.floor((lo-ys*0.35)/ys)*ys, yHi=Math.ceil((hi+ys*0.35)/ys)*ys;
+  const xOf=t=>X0+(t-tA)/(tB-tA||1)*(X1-X0), yOf=v=>Y1-(v-yLo)/(yHi-yLo)*(Y1-Y0);
+  const span=(tB-tA)/60000; const maxT=Math.max(2,Math.floor((X1-X0)/(64*k)));
+  const stepM=[1,2,5,10,15,20,30,60,120,180].find(m=>span/m<=maxT)||240;
+  const xt=[]; for(let t=Math.ceil(tA/(stepM*60000))*stepM*60000;t<=tB;t+=stepM*60000) xt.push(t);
+  ctx.save();
+  ctx.fillStyle="#fff"; ctx.fillRect(box.x,box.y,box.w,box.h);
+  // 充填段色帶
+  for(const tp of o.trips){ const a=Math.max(X0,xOf(R[tp.s].t)), b=Math.min(X1,xOf(R[tp.e].t)); ctx.fillStyle=C.band; ctx.fillRect(a,Y0,b-a,Y1-Y0);
+    if(o.trips.length>1){ ctx.fillStyle=C.bandEdge; ctx.fillRect(a,Y0,.8*k,Y1-Y0); ctx.fillRect(b-.8*k,Y0,.8*k,Y1-Y0); } }
+  // 格線
+  ctx.lineWidth=.8*k; ctx.strokeStyle=C.grid;
+  for(let v=yLo;v<=yHi+1e-9;v+=ys){ const y=yOf(v); ctx.beginPath(); ctx.moveTo(X0,y); ctx.lineTo(X1,y); ctx.stroke(); }
+  for(const t of xt){ const x=xOf(t); ctx.beginPath(); ctx.moveTo(x,Y0); ctx.lineTo(x,Y1); ctx.stroke(); }
+  // 曲線
+  const path=(i0,i1,color,w)=>{ ctx.strokeStyle=color; ctx.lineWidth=w; ctx.lineJoin="round"; ctx.lineCap="round"; ctx.beginPath(); let pen=false;
+    for(let i=i0;i<=i1;i++){ const p=R[i]; if(p.v==null||p.t==null){pen=false;continue;}
+      if(i>i0&&R[i-1].t!=null&&p.t-R[i-1].t>A.step*1.5) pen=false;
+      const x=xOf(p.t),y=yOf(p.v); if(!pen){ctx.moveTo(x,y);pen=true;} else ctx.lineTo(x,y); } ctx.stroke(); };
+  ctx.save(); ctx.beginPath(); ctx.rect(X0,Y0,X1-X0,Y1-Y0); ctx.clip();
+  path(o.i0,o.i1,C.pre,1.3*k);
+  for(const tp of o.trips) path(Math.max(tp.s,o.i0),Math.min(tp.e,o.i1),C.accent,1.9*k);
+  // 標準線
+  const ySt=yOf(A.std.value); ctx.strokeStyle=C.red; ctx.lineWidth=1.1*k; ctx.setLineDash([5*k,3.5*k]); ctx.beginPath(); ctx.moveTo(X0,ySt); ctx.lineTo(X1,ySt); ctx.stroke(); ctx.setLineDash([]);
+  // 低於標準
+  const rr=(o.trips.length>1?2:2.4)*k;
+  ctx.strokeStyle=C.red; ctx.lineWidth=2.4*k;
+  for(const tp of o.trips){ ctx.beginPath(); let prev=-9; for(const i of tp.red){ const x=xOf(R[i].t),y=yOf(R[i].v); if(i===prev+1) ctx.lineTo(x,y); else ctx.moveTo(x,y); prev=i; } ctx.stroke(); }
+  ctx.fillStyle=C.red; for(const tp of o.trips) for(const i of tp.red){ ctx.beginPath(); ctx.arc(xOf(R[i].t),yOf(R[i].v),rr,0,Math.PI*2); ctx.fill(); }
+  ctx.restore();
+  // 外框與刻度
+  ctx.strokeStyle=C.frame; ctx.lineWidth=1*k; ctx.strokeRect(X0,Y0,X1-X0,Y1-Y0);
+  ctx.font=`${10.5*k}px ${FONT}`; ctx.fillStyle=C.sub; ctx.textAlign="right"; ctx.textBaseline="middle";
+  for(let v=yLo;v<=yHi+1e-9;v+=ys){ const y=yOf(v); ctx.beginPath(); ctx.moveTo(X0-4*k,y); ctx.lineTo(X0,y); ctx.stroke();
+    if(Math.abs(y-ySt)<9*k) continue; ctx.fillText(String(+v.toFixed(1)),X0-7*k,y); }
+  ctx.fillStyle=C.red; ctx.font=`700 ${10.5*k}px ${FONT}`; ctx.fillText(String(A.std.value),X0-7*k,ySt);
+  ctx.beginPath(); ctx.strokeStyle=C.red; ctx.moveTo(X0-4*k,ySt); ctx.lineTo(X0,ySt); ctx.stroke();
+  ctx.font=`${10.5*k}px ${FONT}`; ctx.fillStyle=C.sub; ctx.textAlign="center"; ctx.textBaseline="top"; ctx.strokeStyle=C.frame;
+  for(const t of xt){ const x=xOf(t); ctx.beginPath(); ctx.moveTo(x,Y1); ctx.lineTo(x,Y1+4*k); ctx.stroke(); ctx.fillText(fmtHM(t),x,Y1+7*k); }
+  ctx.save(); ctx.translate(box.x+11*k,(Y0+Y1)/2); ctx.rotate(-Math.PI/2); ctx.textAlign="center"; ctx.textBaseline="middle"; ctx.fillStyle=C.sub; ctx.font=`${10.5*k}px ${FONT}`; ctx.fillText("溫度 (°C)",0,0); ctx.restore();
+  if(o.xTitle){ ctx.fillStyle=C.sub; ctx.textAlign="center"; ctx.textBaseline="bottom"; ctx.fillText("時間 (時:分)",(X0+X1)/2,box.y+box.h-1*k); }
+  // 趟次標籤
+  if(o.labels){ ctx.textAlign="center"; ctx.textBaseline="bottom";
+    for(const tp of o.trips){ const a=xOf(R[tp.s].t), b=xOf(R[tp.e].t); const s=o.labelOf?o.labelOf(tp):`第${tp.n}趟`; if(!s) continue;
+      ctx.font=`600 ${10.5*k}px ${FONT}`; const w=ctx.measureText(s).width; if(w>(b-a)+40*k&&!o.labelOf) continue;
+      ctx.fillStyle=tp.red.length?C.red:C.accent; ctx.fillText(s,Math.min(Math.max((a+b)/2,X0+w/2),X1-w/2),Y0-4*k); } }
+  // 最低點標示
+  if(o.annotateMin){ for(const tp of o.trips){ let mi=tp.s; for(let i=tp.s;i<=tp.e;i++) if(R[i].v<R[mi].v) mi=i;
+      const x=xOf(R[mi].t), y=yOf(R[mi].v), bad=A.below(R[mi].v);
+      ctx.strokeStyle=bad?C.red:C.ink; ctx.lineWidth=1.2*k; ctx.beginPath(); ctx.arc(x,y,4.2*k,0,Math.PI*2); ctx.stroke();
+      const s=`最低 ${R[mi].v.toFixed(1)}°C　${fmtTime(R[mi].t)}`; ctx.font=`600 ${10*k}px ${FONT}`; const w=ctx.measureText(s).width+10*k, h=16*k;
+      let lx=Math.min(Math.max(x-w/2,X0+3*k),X1-w-3*k); let ly=y+9*k; if(ly+h>Y1-2*k) ly=y-9*k-h;
+      ctx.fillStyle="rgba(255,255,255,.92)"; ctx.fillRect(lx,ly,w,h); ctx.strokeStyle=bad?C.red:C.frame; ctx.lineWidth=.8*k; ctx.strokeRect(lx,ly,w,h);
+      ctx.fillStyle=bad?C.red:C.ink; ctx.textAlign="left"; ctx.textBaseline="middle"; ctx.fillText(s,lx+5*k,ly+h/2+.5*k); } }
+  ctx.restore();
+  return {xOf,yOf,X0,X1,Y0,Y1,tA,tB};
+}
+
+/* 螢幕圖表（含 hover 提示） */
+function mountChart(el,A,o,height){
+  el.innerHTML=`<canvas></canvas><div class="tip"></div>`;
+  const cv=el.querySelector("canvas"), tip=el.querySelector(".tip");
+  let geo=null, base=null;
+  const draw=()=>{ const w=el.clientWidth; if(!w) return; const dpr=window.devicePixelRatio||1;
+    cv.width=Math.round(w*dpr); cv.height=Math.round(height*dpr); cv.style.height=height+"px";
+    const ctx=cv.getContext("2d"); ctx.setTransform(dpr,0,0,dpr,0,0);
+    geo=drawChart(ctx,{x:0,y:0,w,h:height},A,o); base=ctx.getImageData(0,0,cv.width,cv.height); };
+  draw(); new ResizeObserver(()=>draw()).observe(el);
+  const R=A.R; const tripOf=i=>o.trips.find(tp=>i>=tp.s&&i<=tp.e);
+  const leave=()=>{ tip.style.display="none"; if(base) cv.getContext("2d").putImageData(base,0,0); };
+  cv.addEventListener("mousemove",ev=>{
+    if(!geo) return; const rect=cv.getBoundingClientRect(); const mx=ev.clientX-rect.left;
+    if(mx<geo.X0-4||mx>geo.X1+4){ leave(); return; }
+    const t=geo.tA+(mx-geo.X0)/(geo.X1-geo.X0)*(geo.tB-geo.tA);
+    let lo=o.i0,hi=o.i1; while(hi-lo>1){ const m=(lo+hi)>>1; if((R[m].t??0)<t) lo=m; else hi=m; }
+    const i=Math.abs((R[lo].t??0)-t)<Math.abs((R[hi].t??0)-t)?lo:hi; const p=R[i]; if(p.v==null) return;
+    const ctx=cv.getContext("2d"); ctx.putImageData(base,0,0); const dpr=window.devicePixelRatio||1; ctx.setTransform(dpr,0,0,dpr,0,0);
+    const x=geo.xOf(p.t), y=geo.yOf(p.v); const tp=tripOf(i); const bad=tp&&A.below(p.v);
+    ctx.strokeStyle="rgba(44,44,42,.35)"; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(Math.round(x)+.5,geo.Y0); ctx.lineTo(Math.round(x)+.5,geo.Y1); ctx.stroke();
+    ctx.beginPath(); ctx.arc(x,y,4.5,0,Math.PI*2); ctx.fillStyle=bad?C.red:(tp?C.accent:C.pre); ctx.fill(); ctx.lineWidth=2; ctx.strokeStyle="#fff"; ctx.stroke();
+    tip.innerHTML=`<span class="num">${fmtTime(p.t)}</span>　<span class="tv num ${bad?"bad":""}">${p.v.toFixed(1)}°C</span><br><span style="color:${C.sub}">${tp?`第${tp.n}趟（充填段）`:"非充填段"}　Excel 第 ${p.r} 列</span>`;
+    tip.style.display="block"; const tw=tip.offsetWidth; let left=x+12; if(left+tw>el.clientWidth) left=x-tw-12;
+    tip.style.left=left+"px"; tip.style.top=Math.max(0,Math.min(y-24,height-60))+"px";
+  });
+  cv.addEventListener("mouseleave",leave);
+}
+
+/* ============================== 畫面 ============================== */
+let STATE=null;
+const LEGEND=`<div class="legend"><span><i class="lg-band"></i>充填段</span><span><i class="lg-fill"></i>充填段溫度</span><span><i class="lg-pre"></i>非充填段</span><span><i class="lg-dot"></i>低於標準</span><span><i class="lg-std"></i>標準線</span></div>`;
+function setStep(n){ document.querySelectorAll(".steps .s").forEach((s,i)=>s.classList.toggle("on",i<n)); }
+function showError(fileName,res){
+  setStep(1);
+  $("#out").innerHTML=`<section class="card err"><div class="eh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 7v6"/><path d="M12 16.5v.5"/></svg><h2>檔案需要修正，暫時無法產生日報</h2></div>
+    <div class="lead">檔案：${esc(fileName)}　｜　請現場品保依下列項目確認、修正後重新上傳。</div>
+    <ol>${res.errors.map(e=>`<li>${esc(e.msg)}<div class="fix">→ ${esc(e.fix)}</div></li>`).join("")}</ol></section>`;
+  $("#out").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function showResult(A){
+  const total=A.trips.length;
+  let html=`<section class="card"><div class="filebar">
+    <div class="meta"><div><span>檔案</span><b>${esc(A.fileName)}</b></div><div><span>生產日期</span><b class="num">${A.date}</b></div>
+    <div><span>標準</span><b>${A.std.label}°C</b></div><div><span>品項／趟數</span><b class="num">${A.groups.length} 品項／${total} 趟</b></div></div>
+    <div class="btns"><button id="again">重新上傳</button><button class="primary" id="pdf">下載日報 PDF</button></div><div id="pdfMsg" class="pdfmsg" role="status"></div></div></section>`;
+  A.groups.forEach((g,gi)=>{
+    const ts=g.trips, red=ts.reduce((a,t)=>a+t.red.length,0);
+    html+=`<section class="card"><div class="item-h"><h2>${esc(g.item)}</h2>
+      <span class="info num">${ts.length} 趟　${fmtTime(A.R[ts[0].s].t)} – ${fmtTime(A.R[ts[ts.length-1].e].t)}</span>
+      ${red?`<span class="warn">● 低於標準 ${red} 筆</span>`:""}</div>${LEGEND}
+      <div class="chart" id="c${gi}"></div>
+      <div class="tablewrap"><table class="trips num"><tr><th>趟次</th><th>開始</th><th>結束</th><th>時長</th><th>最高 °C</th><th>最低 °C</th><th>平均 °C</th><th>低於標準筆數</th></tr>
+      ${ts.map(t=>`<tr><td>第${t.n}趟</td><td>${fmtTime(A.R[t.s].t)}</td><td>${fmtTime(A.R[t.e].t)}</td><td>${fmtDur(A.R[t.e].t-A.R[t.s].t)}</td><td>${f1(t.max)}</td><td class="${t.red.length?"bad":""}">${f1(t.min)}</td><td>${f1(t.avg)}</td><td class="${t.red.length?"bad":""}">${t.red.length}</td></tr>`).join("")}</table></div>
+      ${red?`<div class="redlist">${ts.filter(t=>t.red.length).map(t=>`<div class="row"><span class="lab">第${t.n}趟</span>${t.red.map(i=>`<span class="v num">${fmtTime(A.R[i].t)} <b>${A.R[i].v.toFixed(1)}</b></span>`).join("")}</div>`).join("")}</div>`:""}
+      <button class="link" data-z="${gi}">＋ 顯示單趟放大圖（${ts.length}）</button>
+      <div class="zoom" id="z${gi}" hidden></div></section>`;
+  });
+  $("#out").innerHTML=html;
+  A.groups.forEach((g,gi)=>mountChart($("#c"+gi),A,{i0:g.trips[0].s,i1:g.trips[g.trips.length-1].e,trips:g.trips,labels:true},330));
+  document.querySelectorAll("[data-z]").forEach(b=>b.addEventListener("click",()=>{
+    const gi=+b.dataset.z, z=$("#z"+gi), g=A.groups[gi];
+    if(z.hidden){ z.hidden=false; b.textContent="－ 收合單趟放大圖";
+      if(!z.dataset.done){ z.innerHTML=g.trips.map((t,k)=>`<div class="z"><div class="zt num ${t.red.length?"bad":""}">第${t.n}趟　${fmtTime(A.R[t.s].t)}–${fmtTime(A.R[t.e].t)}${t.red.length?`　低於標準 ${t.red.length} 筆`:""}</div><div class="chart" id="z${gi}_${k}"></div></div>`).join("");
+        g.trips.forEach((t,k)=>mountChart($(`#z${gi}_${k}`),A,{i0:t.s,i1:t.e,trips:[t],labels:false,annotateMin:true},230)); z.dataset.done=1; } }
+    else { z.hidden=true; b.textContent=`＋ 顯示單趟放大圖（${g.trips.length}）`; }
+  }));
+  $("#again").onclick=()=>{ $("#uploadCard").hidden=false; $("#guide").hidden=false; $("#out").innerHTML=""; $("#file").value=""; setStep(1); window.scrollTo(0,0); };
+  $("#pdf").onclick=async()=>{ const b=$("#pdf"); b.disabled=true; b.textContent="產生中…"; const m=$("#pdfMsg"); m.textContent=""; try{ const r=await makePdf(A); if(r.status==="saved"){ setStep(3); m.textContent="已產生 "+r.name; } } catch(e){ m.textContent="PDF 產生失敗："+e.message; m.style.color="var(--red)"; console.error(e); } b.disabled=false; b.textContent="下載日報 PDF"; };
+}
+
+async function handleFile(f){
+  if(!f) return;
+  $("#busy").classList.add("on");
+  try{
+    const buf=await f.arrayBuffer();
+    let sheets;
+    if(/\.csv$/i.test(f.name)){ let txt=new TextDecoder("utf-8").decode(buf); if(txt.includes("\uFFFD")) txt=new TextDecoder("big5").decode(buf); sheets=readCsv(txt); }
+    else if(/\.xlsx$/i.test(f.name)) sheets=await readXlsx(buf);
+    else throw new Error("只支援 .xlsx 或 .csv 檔。若是舊版 .xls，請先在 Excel「另存新檔 → Excel 活頁簿 (.xlsx)」。");
+    const res=analyze(sheets);
+    if(res.errors.length){ showError(f.name,res); return; }
+    res.fileName=f.name;
+    try{ const h=await crypto.subtle.digest("SHA-256",buf); res.hash=[...new Uint8Array(h)].map(b=>b.toString(16).padStart(2,"0")).join(""); }catch(e){ res.hash=null; }
+    const tv=res.R.filter(x=>x.v!=null&&x.t!=null); res.recFrom=tv[0].t; res.recTo=tv[tv.length-1].t;
+    STATE=res; $("#uploadCard").hidden=true; $("#guide").hidden=true; setStep(2); showResult(res); window.scrollTo(0,0);
+  }catch(e){ console.error(e); showError(f.name,{errors:[{msg:"檔案無法讀取："+e.message,fix:"請確認是記錄器匯出、並已標註的 Excel 檔。"}]}); }
+  finally{ $("#busy").classList.remove("on"); }
+}
+
+/* ============================== PDF（A4 直式） ============================== */
+const PW=794, PH=1123, PS=2.2, M=46, CW=PW-2*M, TOP=112, BOTTOM=PH-58;
+let logoImg=null;
+function loadLogo(){ return new Promise(r=>{ if(logoImg) return r(logoImg); const im=new Image(); im.onload=()=>{logoImg=im;r(im);}; im.onerror=()=>r(null); im.src=LOGO; }); }
+function txt(ctx,s,x,y,o={}){ ctx.font=`${o.w||400} ${o.size||11}px ${FONT}`; ctx.fillStyle=o.color||C.ink; ctx.textAlign=o.align||"left"; ctx.textBaseline=o.base||"alphabetic"; ctx.fillText(s,x,y); return ctx.measureText(s).width; }
+function tw(ctx,s,size,w){ ctx.font=`${w||400} ${size}px ${FONT}`; return ctx.measureText(s).width; }
+
+function pageHeader(ctx,A){
+  let x=M; if(logoImg){ const h=36, w=h*logoImg.width/logoImg.height; ctx.drawImage(logoImg,M,30,w,h); x=M+w+12; }
+  txt(ctx,CFG.title,x,52,{size:17.5,w:700});
+  txt(ctx,CFG.org,x,71,{size:10.5,color:C.sub});
+  txt(ctx,"生產日期",PW-M,46,{size:9.5,color:C.sub,align:"right"});
+  txt(ctx,A.date,PW-M,68,{size:17,w:700,color:C.accent,align:"right"});
+  ctx.fillStyle=C.accent; ctx.fillRect(M,84,CW,2.2); ctx.fillStyle=C.line; ctx.fillRect(M,88,CW,.8);
+}
+function pageFooter(ctx,A,n,N){
+  ctx.fillStyle=C.line; ctx.fillRect(M,PH-44,CW,.8);
+  txt(ctx,`產出時間 ${A.printedAt}　｜　原始檔 ${A.fileName}${A.hash?`　｜　SHA-256 ${A.hash.slice(0,16)}…`:""}`,M,PH-27,{size:8.5,color:C.sub});
+  txt(ctx,`第 ${n} 頁，共 ${N} 頁`,PW-M,PH-27,{size:8.5,color:C.sub,align:"right"});
+}
+/* 版面引擎：依序放區塊，放不下自動換頁 */
+function Flow(A){
+  const pages=[]; let ops=null, y=0; let cont=null;
+  const f={
+    get y(){return y;}, set y(v){y=v;}, pages,
+    newPage(){ ops=[]; pages.push(ops); y=TOP; if(cont){ const c=cont, yy=y; ops.push(ctx=>txt(ctx,c,M,yy+12,{size:10,color:C.sub})); y+=24; } },
+    setCont(s){ cont=s; },
+    need(h){ if(!ops||y+h>BOTTOM) f.newPage(); },
+    add(h,fn){ f.need(h); const yy=y; ops.push(ctx=>fn(ctx,yy)); y+=h; },
+    space(h){ y+=h; }
+  };
+  return f;
+}
+function sectionHead(F,no,title,meta,warn){
+  F.add(40,(ctx,y)=>{
+    ctx.fillStyle=C.accent; ctx.fillRect(M,y+6,4,20);
+    const w=txt(ctx,`${no}　${title}`,M+14,y+22,{size:15,w:700});
+    if(meta) txt(ctx,meta,M+14+w+14,y+22,{size:10.5,color:C.sub});
+    if(warn) txt(ctx,warn,PW-M,y+22,{size:10.5,w:700,color:C.red,align:"right"});
+  });
+}
+function caption(F,s,above){ F.add(above?20:24,(ctx,y)=>txt(ctx,s,M,y+(above?13:15),{size:10,w:600,color:C.sub})); }
+function figure(F,h,A,o,cap){ F.need(h+24); F.add(h,(ctx,y)=>drawChart(ctx,{x:M-4,y,w:CW+4,h},A,{...o,k:o.k||1})); caption(F,cap); }
+/* 三線表（科學報告格式） */
+function table(F,cols,rows,cap,o={}){
+  const rh=o.rh||21, hh=26; const sum=cols.reduce((a,c)=>a+c.w,0), sc=CW/sum;
+  const xs=[]; let cx=M; for(const c of cols){ xs.push(cx); cx+=c.w*sc; }
+  let i=0, first=true;
+  while(i<rows.length){
+    F.need((first&&cap?20:0)+hh+rh*Math.min(3,rows.length-i)+6);
+    if(first&&cap) caption(F,cap,true);
+    const fit=Math.max(1,Math.floor((BOTTOM-F.y-hh-6)/rh)); const chunk=rows.slice(i,i+fit); const startIdx=i; i+=chunk.length;
+    const last=i>=rows.length;
+    F.add(hh+rh*chunk.length+8,(ctx,y)=>{
+      ctx.fillStyle=C.ink; ctx.fillRect(M,y,CW,1.4); ctx.fillRect(M,y+hh,CW,.8);
+      cols.forEach((c,ci)=>txt(ctx,c.h,xs[ci]+c.w*sc/2,y+hh/2+1,{size:9.5,w:600,color:C.sub,align:"center",base:"middle"}));
+      chunk.forEach((r,ri)=>{ const yy=y+hh+rh*ri;
+        if(r._sep&&ri>0){ ctx.fillStyle=C.line; ctx.fillRect(M,yy,CW,.8); }
+        else if(ri>0){ ctx.fillStyle="#F1F1EE"; ctx.fillRect(M,yy,CW,.6); }
+        cols.forEach((c,ci)=>{ const cell=r[ci]; const bad=cell&&typeof cell==="object"&&cell.bad; const s=cell&&typeof cell==="object"?cell.t:cell; if(s==null||s==="") return;
+          txt(ctx,String(s),xs[ci]+c.w*sc/2,yy+rh/2+1,{size:10.5,color:bad?C.red:C.ink,w:bad||c.bold?700:400,align:"center",base:"middle"}); }); });
+      const yb=y+hh+rh*chunk.length; ctx.fillStyle=C.ink; ctx.fillRect(M,yb,CW,last?1.4:.8);
+      if(!last) txt(ctx,"（接下頁）",PW-M,yb+12,{size:9,color:C.muted,align:"right"});
+    });
+    first=false;
+  }
+}
+function tripRow(A,t,withItem,firstOfGroup){
+  const R=A.R; const n=R[t.e].r-R[t.s].r+1;
+  const r=[`第${t.n}趟`,fmtTime(R[t.s].t),fmtTime(R[t.e].t),fmtDur(R[t.e].t-R[t.s].t),t.e-t.s+1,f1(t.max),{t:f1(t.min),bad:t.red.length>0},f1(t.avg),{t:t.red.length,bad:t.red.length>0}];
+  const row=withItem?[firstOfGroup?t.group.item:"",...r]:r; row._sep=firstOfGroup; return row;
+}
+const TCOLS=[{h:"趟次",w:58},{h:"開始",w:72},{h:"結束",w:72},{h:"時長",w:76},{h:"筆數",w:48},{h:"最高 °C",w:60},{h:"最低 °C",w:60},{h:"平均 °C",w:60},{h:"低於標準",w:64}];
+
+function legendBlock(F,A){
+  F.add(22,(ctx,y)=>{ const items=[["band","充填段"],["fill","充填段溫度"],["pre","非充填段"],["dot","低於標準"],["std",`標準 ${A.std.label}°C`]]; let cx=M+2; const yy=y+10;
+    for(const [k,l] of items){
+      if(k==="band"){ ctx.fillStyle="#E6ECF2"; ctx.fillRect(cx,yy-6,14,11); ctx.strokeStyle=C.bandEdge; ctx.lineWidth=.8; ctx.strokeRect(cx,yy-6,14,11); }
+      if(k==="fill"){ ctx.fillStyle=C.accent; ctx.fillRect(cx,yy-1.2,18,2.4); }
+      if(k==="pre"){ ctx.fillStyle=C.pre; ctx.fillRect(cx,yy-.8,18,1.6); }
+      if(k==="dot"){ ctx.beginPath(); ctx.arc(cx+5,yy,3.5,0,7); ctx.fillStyle=C.red; ctx.fill(); }
+      if(k==="std"){ ctx.strokeStyle=C.red; ctx.setLineDash([5,3]); ctx.lineWidth=1.2; ctx.beginPath(); ctx.moveTo(cx,yy); ctx.lineTo(cx+18,yy); ctx.stroke(); ctx.setLineDash([]); }
+      const off=k==="dot"?13:(k==="band"?20:24); const w=txt(ctx,l,cx+off,yy+3.5,{size:9.5,color:C.sub}); cx+=off+w+18; } });
+}
+
+function buildPages(A){
+  const R=A.R, F=Flow(A); let fig=0, tab=0;
+  const redTrips=A.trips.filter(t=>t.red.length), redTotal=redTrips.reduce((a,t)=>a+t.red.length,0);
+  F.newPage();
+  // ---- 基本資料
+  F.add(92,(ctx,y)=>{
+    const cells=[["生產日期",A.date],["量測位置",CFG.point],["判定標準",`${A.std.label} °C`],
+                 ["記錄期間",`${fmtTime(A.recFrom)} – ${fmtTime(A.recTo)}`],["取樣間隔",`${Math.round(A.step/1000)} 秒`],["原始檔名",A.fileName]];
+    ctx.fillStyle="#F7F8FA"; ctx.fillRect(M,y,CW,80); ctx.strokeStyle=C.line; ctx.lineWidth=.8; ctx.strokeRect(M,y,CW,80);
+    const cw=CW/3; ctx.fillStyle=C.line; ctx.fillRect(M,y+40,CW,.8); ctx.fillRect(M+cw,y,.8,80); ctx.fillRect(M+2*cw,y,.8,80);
+    cells.forEach(([k,v],i)=>{ const x=M+(i%3)*cw+14, yy=y+Math.floor(i/3)*40;
+      txt(ctx,k,x,yy+16,{size:9,color:C.sub});
+      let s=v; ctx.font=`600 12px ${FONT}`; while(ctx.measureText(s).width>cw-26&&s.length>4) s=s.slice(0,-2); if(s!==v) s+="…";
+      txt(ctx,s,x,yy+32,{size:12,w:600}); });
+  });
+  // ---- 1 充填摘要
+  sectionHead(F,"1","充填摘要");
+  F.add(26,(ctx,y)=>{ const s=`本日共 ${A.groups.length} 個品項、${A.trips.length} 趟充填；充填段內低於標準的數值共 `; let x=M;
+    x+=txt(ctx,s,x,y+12,{size:11});
+    x+=txt(ctx,`${redTotal} 筆`,x,y+12,{size:11,w:700,color:redTotal?C.red:C.ink});
+    txt(ctx,redTotal?`（${redTrips.length} 趟，明細見附錄）。`:"。",x,y+12,{size:11}); });
+  tab++; const rows=[]; A.groups.forEach(g=>g.trips.forEach((t,i)=>rows.push(tripRow(A,t,true,i===0))));
+  table(F,[{h:"品項",w:82,bold:true},...TCOLS],rows,`表 ${tab}　各趟充填溫度統計`);
+  F.space(10);
+  const fi=R.findIndex(x=>x.v!=null), la=R.length-1-[...R].reverse().findIndex(x=>x.v!=null);
+  legendBlock(F,A);
+  fig++; figure(F,300,A,{i0:fi,i1:la,trips:A.trips,labels:true,xTitle:true,labelOf:t=>t.n===1?t.group.item:""},`圖 ${fig}　全日溫度曲線（色帶為充填段，標示為各品項第一趟）`);
+  // ---- 各品項
+  A.groups.forEach((g,gi)=>{
+    const ts=g.trips, red=ts.reduce((a,t)=>a+t.red.length,0);
+    F.setCont(null); F.newPage(); F.setCont(`${gi+2}　品項 ${g.item}（續）`);
+    sectionHead(F,String(gi+2),`品項 ${g.item}`,`${ts.length} 趟　${fmtTime(R[ts[0].s].t)} – ${fmtTime(R[ts[ts.length-1].e].t)}`,red?`● 低於標準 ${red} 筆`:"");
+    legendBlock(F,A);
+    fig++; figure(F,ts.length>4?250:280,A,{i0:ts[0].s,i1:ts[ts.length-1].e,trips:ts,labels:true,xTitle:true},`圖 ${fig}　${g.item} 連續溫度曲線（第 1 趟開始至第 ${ts.length} 趟結束）`);
+    tab++; table(F,TCOLS,ts.map(t=>tripRow(A,t,false,false)),`表 ${tab}　${g.item} 各趟統計`);
+    F.space(8);
+    fig++; const capFig=fig; F.add(20,(ctx,y)=>txt(ctx,`圖 ${capFig}　${g.item} 單趟放大（○ 為該趟最低點）`,M,y+13,{size:10,w:600,color:C.sub}));
+    const gw=(CW-18)/2, gh=196;
+    for(let i=0;i<ts.length;i+=2){
+      F.add(gh+12,(ctx,y)=>{
+        ts.slice(i,i+2).forEach((t,k)=>{ const x=M+k*(gw+18); const bad=t.red.length>0;
+          ctx.strokeStyle=C.line; ctx.lineWidth=.8; ctx.strokeRect(x,y,gw,gh);
+          txt(ctx,`第${t.n}趟`,x+10,y+18,{size:11.5,w:700,color:bad?C.red:C.accent});
+          txt(ctx,`${fmtTime(R[t.s].t)} – ${fmtTime(R[t.e].t)}`,x+58,y+18,{size:10,color:C.sub});
+          if(bad) txt(ctx,`低於標準 ${t.red.length} 筆`,x+gw-10,y+18,{size:10,w:700,color:C.red,align:"right"});
+          drawChart(ctx,{x:x+2,y:y+26,w:gw-6,h:gh-30},A,{i0:t.s,i1:t.e,trips:[t],labels:false,annotateMin:true,k:.92}); });
+      });
+    }
+  });
+  // ---- 附錄
+  F.setCont(null); F.newPage(); F.setCont("附錄　低於標準數值明細（續）");
+  sectionHead(F,"附錄","低於標準數值明細",`充填段內 ${A.std.op==="gt"?"≤":"<"} ${A.std.value}°C 的所有紀錄`);
+  if(!redTotal){ F.add(30,(ctx,y)=>txt(ctx,"本日所有充填段均無低於標準的數值。",M,y+16,{size:11.5,color:C.sub})); }
+  else {
+    const list=[]; redTrips.forEach(t=>t.red.forEach(i=>list.push([t.group.item,`第${t.n}趟`,fmtTime(R[i].t),R[i].r,{t:R[i].v.toFixed(1),bad:true},{t:(R[i].v-A.std.value).toFixed(1),bad:true}])));
+    const cols=[{h:"品項",w:80},{h:"趟次",w:52},{h:"時間",w:66},{h:"Excel 列",w:58},{h:"溫度 °C",w:58},{h:"與標準差 °C",w:76}];
+    const half=(CW-24)/2, sum=cols.reduce((a,c)=>a+c.w,0), sc=half/sum, rh=19, hh=24;
+    let idx=0; tab++; const capT=tab; let firstChunk=true;
+    while(idx<list.length){
+      F.need(hh+rh*3+30);
+      if(firstChunk){ F.add(20,(ctx,y)=>txt(ctx,`表 ${capT}　低於標準數值明細（共 ${list.length} 筆）`,M,y+13,{size:10,w:600,color:C.sub})); }
+      const per=Math.max(1,Math.floor((BOTTOM-F.y-hh-10)/rh)); const take=list.slice(idx,idx+per*2); idx+=take.length; firstChunk=false;
+      const L=take.slice(0,Math.ceil(take.length/2)), Rr=take.slice(Math.ceil(take.length/2));
+      F.add(hh+rh*L.length+10,(ctx,y)=>{
+        [L,Rr].forEach((part,pi)=>{ if(!part.length) return; const x0=M+pi*(half+24); const xs=[]; let cx=x0; cols.forEach(c=>{xs.push(cx);cx+=c.w*sc;});
+          ctx.fillStyle=C.ink; ctx.fillRect(x0,y,half,1.4); ctx.fillRect(x0,y+hh,half,.8);
+          cols.forEach((c,ci)=>txt(ctx,c.h,xs[ci]+c.w*sc/2,y+hh/2+1,{size:9,w:600,color:C.sub,align:"center",base:"middle"}));
+          part.forEach((r,ri)=>{ const yy=y+hh+rh*ri; if(ri>0){ctx.fillStyle="#F1F1EE"; ctx.fillRect(x0,yy,half,.6);}
+            r.forEach((cell,ci)=>{ const bad=cell&&typeof cell==="object"; const s=bad?cell.t:cell; txt(ctx,String(s),xs[ci]+cols[ci].w*sc/2,yy+rh/2+1,{size:10,color:bad?C.red:C.ink,w:bad?700:400,align:"center",base:"middle"}); }); });
+          ctx.fillStyle=C.ink; ctx.fillRect(x0,y+hh+rh*part.length,half,1.4); });
+      });
+    }
+  }
+  return F.pages;
+}
+
+async function makePdf(A){
+  await loadLogo();
+  A.printedAt=nowStr();
+  const pages=buildPages(A), N=pages.length, jpgs=[];
+  const cv=document.createElement("canvas"); cv.width=Math.round(PW*PS); cv.height=Math.round(PH*PS);
+  for(let n=0;n<N;n++){
+    const ctx=cv.getContext("2d"); ctx.setTransform(PS,0,0,PS,0,0); ctx.fillStyle="#fff"; ctx.fillRect(0,0,PW,PH);
+    pageHeader(ctx,A); for(const op of pages[n]) op(ctx); pageFooter(ctx,A,n+1,N);
+    const blob=await new Promise(r=>cv.toBlob(r,"image/jpeg",0.9));
+    jpgs.push(new Uint8Array(await blob.arrayBuffer()));
+  }
+  const pdf=buildPdf(jpgs,cv.width,cv.height,`${CFG.title} ${A.date}`);
+  const name=`PE袋充填溫度日報_${A.date}.pdf`;
+  const dl=await DL;
+  if(dl){ try{ await dl.save({filename:name,data:pdf}); return {name,pages:N,status:"saved"}; }
+    catch(e){ if(e&&e.code==="declined") return {name,status:"declined"}; throw new Error((e&&e.message)||"瀏覽器不允許下載"); } }
+  const url=URL.createObjectURL(pdf); const a=document.createElement("a"); a.href=url; a.download=name; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),30000);
+  return {name,pages:N,status:"saved"};
+}
+function buildPdf(jpgs,w,h,title){
+  const enc=new TextEncoder(); const parts=[]; const offs=[]; let len=0;
+  const put=x=>{ const b=typeof x==="string"?enc.encode(x):x; parts.push(b); len+=b.length; };
+  const W=595.28, H=841.89; const N=jpgs.length;
+  const pid=k=>4+k*3, cid=k=>5+k*3, iid=k=>6+k*3; const total=3+N*3;
+  const obj=(id,body)=>{ offs[id]=len; put(`${id} 0 obj\n`); if(typeof body==="string") put(body); else body(); put("\nendobj\n"); };
+  put("%PDF-1.4\n"); put(new Uint8Array([0x25,0xE2,0xE3,0xCF,0xD3,0x0A]));
+  obj(1,"<< /Type /Catalog /Pages 2 0 R >>");
+  obj(2,`<< /Type /Pages /Count ${N} /Kids [${jpgs.map((_,k)=>pid(k)+" 0 R").join(" ")}] >>`);
+  const hex=s=>{ let o="FEFF"; for(const ch of s){ const c=ch.codePointAt(0); if(c>0xFFFF){ const v=c-0x10000; o+=(0xD800+(v>>10)).toString(16).padStart(4,"0")+(0xDC00+(v&0x3FF)).toString(16).padStart(4,"0"); } else o+=c.toString(16).padStart(4,"0"); } return "<"+o.toUpperCase()+">"; };
+  obj(3,`<< /Title ${hex(title)} /Producer ${hex("五惠 充填溫度日報")} >>`);
+  jpgs.forEach((j,k)=>{
+    obj(pid(k),`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${W} ${H}] /Resources << /XObject << /Im0 ${iid(k)} 0 R >> >> /Contents ${cid(k)} 0 R >>`);
+    const cs=`q\n${W} 0 0 ${H} 0 0 cm\n/Im0 Do\nQ\n`;
+    obj(cid(k),()=>{ put(`<< /Length ${cs.length} >>\nstream\n${cs}endstream`); });
+    obj(iid(k),()=>{ put(`<< /Type /XObject /Subtype /Image /Width ${w} /Height ${h} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${j.length} >>\nstream\n`); put(j); put("\nendstream"); });
+  });
+  const xref=len; let x=`xref\n0 ${total+1}\n0000000000 65535 f \n`;
+  for(let i=1;i<=total;i++) x+=String(offs[i]).padStart(10,"0")+" 00000 n \n";
+  put(x); put(`trailer\n<< /Size ${total+1} /Root 1 0 R /Info 3 0 R >>\nstartxref\n${xref}\n%%EOF\n`);
+  return new Blob(parts,{type:"application/pdf"});
+}
+
+/* ============================== 上傳事件 ============================== */
+const DL=(window.claude&&typeof window.claude.use==="function")?window.claude.use("downloads").catch(()=>null):Promise.resolve(null);
+const drop=$("#drop");
+$("#file").addEventListener("change",e=>handleFile(e.target.files[0]));
+["dragenter","dragover"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add("over");}));
+["dragleave","drop"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove("over");}));
+drop.addEventListener("drop",e=>handleFile(e.dataTransfer.files[0]));
+window.__test={analyze,readXlsx,makePdf,buildPages,get state(){return STATE;}};
+</script>
+</body>
+</html>
