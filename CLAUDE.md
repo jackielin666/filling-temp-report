@@ -36,6 +36,14 @@
 - 五惠紅 `#D7000F` 只出現在 Logo。
 - 風格：簡潔專業、扁平，不用漸層。
 
+## 登入與帳號
+- 帳號放在**共用的 Supabase 專案 `smart-equipment-patrol`**（與工務、包裝、送貨、前處理系統共用），本系統帳號一律是 `帳號@filltemp.local`。
+- 使用者只打帳號（例：`adm0`），程式自動補上 `@filltemp.local`；其他系統的帳號（`@packing.local` 等）無法登入本系統。
+- 登入用 Supabase Auth REST API（`/auth/v1/token`），直接用 `fetch`，不載入 supabase-js。
+- 閒置 15 分鐘自動登出，登出前 1 分鐘提醒；多分頁共用 localStorage 的 `filltemp.lastActive`；隔天打開若已超過 15 分鐘直接回登入畫面。
+- 新增／停用帳號：在 Supabase 專案 `smart-equipment-patrol` 的 Authentication → Users 操作，或請 Claude 用 SQL 建立（比照既有帳號格式，`raw_user_meta_data.display_name` 放顯示名稱）。
+- 本系統沒有資料表，登入只用來控管誰能使用畫面。
+
 ## 安全規範
 - 溫度資料只在瀏覽器處理，不得上傳到任何伺服器。
 - 不在任何檔案存放密碼、Token、API Key（Supabase 的 anon key 屬於公開金鑰，可放在前端）。

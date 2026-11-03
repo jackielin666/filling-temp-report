@@ -9,7 +9,7 @@
 <style>
 :root{
   --bg:#F6F6F4; --card:#FFFFFF; --ink:#2C2C2A; --sub:#6B6B66; --muted:#9A9A94;
-  --line:#E3E3DE; --accent:#1F4E79; --accent-soft:#EAF0F6; --accent-mid:#C9D7E6;
+  --line:#E3E3DE; --accent:#1F4E79; --accent-dark:#163A5C; --accent-soft:#EAF0F6; --accent-mid:#C9D7E6;
   --pre:#B9B9B2; --red:#C62828;
 }
 *{box-sizing:border-box}
@@ -43,8 +43,8 @@ main{max-width:1120px;margin:0 auto;padding-block:28px 60px;padding-left:max(16p
 .drop .ic svg{width:30px;height:30px}
 .drop .t1{font-size:19px;font-weight:700}
 .drop .or{color:var(--muted);font-size:13px}
-.drop .btn{display:inline-block;background:var(--ink);color:#fff;border-radius:8px;padding:9px 22px;font-weight:600;font-size:15px}
-.drop:hover .btn{background:#000}
+.drop .btn{display:inline-block;background:var(--accent);color:#fff;border-radius:8px;padding:9px 22px;font-weight:600;font-size:15px}
+.drop:hover .btn{background:var(--accent-dark)}
 .drop .t2{color:var(--sub);font-size:12.5px;margin-top:8px;display:flex;gap:6px 14px;flex-wrap:wrap;justify-content:center}
 .drop .t2 span{display:inline-flex;align-items:center;gap:5px}
 .drop .t2 svg{width:14px;height:14px}
@@ -101,8 +101,8 @@ main{max-width:1120px;margin:0 auto;padding-block:28px 60px;padding-left:max(16p
 .filebar .btns{margin-left:auto;display:flex;gap:10px}
 button{font:inherit;cursor:pointer;border-radius:8px;padding:9px 18px;border:1px solid var(--line);background:#fff;color:var(--ink)}
 button:hover{border-color:#BDBDB6}
-button.primary{background:var(--ink);border-color:var(--ink);color:#fff;font-weight:600}
-button.primary:hover{background:#000}
+button.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+button.primary:hover{background:var(--accent-dark);border-color:var(--accent-dark)}
 button:disabled{opacity:.55;cursor:wait}
 button.link{border:none;background:none;color:var(--accent);padding:6px 0;font-size:14px}
 button.link:hover{text-decoration:underline}
@@ -142,16 +142,68 @@ td.bad{color:var(--red);font-weight:700}
 .busy.on{display:flex}
 .pdfmsg{flex-basis:100%;text-align:right;color:var(--sub);font-size:13px;min-height:1px}
 footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px}
+/* ---------- 登入 ---------- */
+.who{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:13.5px;color:var(--sub)}
+.who b{color:var(--ink);font-weight:600}
+.who button{padding:5px 14px;font-size:13px}
+.login-wrap{min-height:calc(100vh - 66px);display:flex;align-items:flex-start;justify-content:center;padding-block:8vh 40px;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+.login{width:100%;max-width:400px;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.login-head{padding:26px 28px 18px;border-bottom:1px solid var(--line);display:flex;gap:14px;align-items:center}
+.login-head img{width:46px;height:auto}
+.login-head .eb{font-size:12px;color:var(--sub);letter-spacing:.5px}
+.login-head h2{margin:2px 0 0;font-size:21px}
+.login-body{padding:22px 28px 26px;display:flex;flex-direction:column;gap:16px}
+.field label{display:block;font-size:13.5px;font-weight:600;margin-bottom:6px}
+.field input{width:100%;font:inherit;font-size:16px;padding:10px 12px;border:1px solid #CFCFC8;border-radius:8px;background:#fff;color:var(--ink)}
+.field input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.pwbox{position:relative}
+.pwbox input{padding-right:64px}
+.pweye{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:none;background:none;color:var(--accent);font-size:13px;padding:6px 8px}
+.capshint{margin-top:6px;font-size:12.5px;color:#9A6700}
+.login .go{width:100%;padding:11px;font-size:16px}
+.login .msg{background:#FDF1F1;border:1px solid #F0C9C9;color:var(--red);border-radius:8px;padding:10px 12px;font-size:13.5px;white-space:pre-line}
+.login .note{margin:0;color:var(--sub);font-size:12.5px;line-height:1.7}
+.bootmsg{text-align:center;color:var(--sub);padding:18vh 16px}
+#idleWarn{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom, 0px));transform:translateX(-50%);z-index:20;max-width:min(560px,calc(100vw - 32px));
+  background:#22272B;color:#fff;border-radius:8px;padding:14px 18px;font-size:14px;line-height:1.6;box-shadow:0 8px 28px rgba(0,0,0,.25)}
 </style>
 </head>
 <body>
 <header class="top"><div class="top-in">
   <img src="data:image/png;base64,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" alt="五惠食品 Logo">
   <div><h1>充填溫度日報</h1><div class="sub">PE袋充填機・進料端溫度紀錄</div></div>
-  <div class="right">測試版・尚未接登入</div>
+  <div class="who" id="whoBox" hidden><span>登入帳號</span><b id="who"></b><button type="button" id="logoutBtn">登出</button></div>
 </div></header>
 
-<main>
+<div class="bootmsg" id="bootView">確認登入狀態中…</div>
+
+<div class="login-wrap" id="loginView" hidden>
+  <form class="login" id="loginForm" autocomplete="on" novalidate>
+    <div class="login-head">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABkCAYAAABuK6XnAAAReUlEQVR42u2df5QU1ZXHP83wa3CGzPAzsAEBFSUqGQUxYCSrbgKaTTAJRFaS1c3RyCaKEo2rEjDJRuIBNybkeIzhR3QNiQaz7rKrkYTE6K5sUFhcjdmQA4qijOCgZMY4w49m9o/7faffFNU9Vd3VTTf2PadPd1dXvXr17rv3fu+P9zrVPP4sqlT+1KM6BFVGVSlB6nkMPMNQ4ANAf6AZeKrKqPKiRcClwECgN5AC0sB+YA+wGHjgWGFUqgLBxDhgJdAE9BWDgpQG3gF+BXyyaqNKT6cCa4EPArVZmARQA9QDHwd+W2VU6WkNcGIOBoUxbBLwWJVRpaO1Unux1TswFfholVHFp7HAh0OOdwo8vAO06f1AyHm1wHeqjCo+/a3gdxAw7AWWABdKaj4F/BhoFRN9ep/OqcLzItKskGOPAx8JOb4OuA34JXC8Z8/qgdOAJ6sSVTyqDai7bVmY5GibmHswcHx0VaKyUz0wHhgMvA38HtgVM/Lg9/MwsCzCdZuAZwTla3RsUB79Px0Ypc/b1f9jilEjgZ8BIyQRPSQNB2T471d0oTtqlz1ydAj4XsQ+3AOc6UnknyNeNwr4viZYrTdOhzTZHgLmHwuq7wbgaeAMSUR/oE7SNVC243pgi5zYXNQqKXJ0MEY/3gh8b45wzQIsXngeMAxoUN/r9Pl9wFWS2DMqmVGLgIViUE0O36af1MpjwMXdtNmRZ186PPTXCbR0c/5dwI1iUO9ubGYTFkucXImMukIqoX+MyMEwYBUWYM1lb/xrolI6wLSXc5y7Gvg79T0Vse8nSb3WVxKj6oCbpB7iUI2u+X4OZq32Br0GCyNFIV8q3iJ73G8N8OkAuowa9ThZNqtiGHWP9Hc+lBKjlwPTQn5/XlEHx6hpEdvt40nHdmBfyDkrpHr75Nn33gIsoyuFUZO7edgDAgbNWL6oTcc6A3brPmBI4NqdwCve9/dH7NNxaj+N5aeC9HXg8wH0mxbS3Ke+tmiSpLu5zxWVwKiR6mwYuXjcd7GY3XABjTN1rD0Q7hmaJXpwnQarh9RUFDpTTGjhyAj6NOAfAvbokJzlK4FG9XUwcD6wMQez+gKXVAKjxuRASR3AZUJTuwPRgxuBs4A/BK4ZKwTm03qpr5QkbkKEfs0EemGJxiCtCmiAQzrvFNlEnzYC5wAPEx70TeVhm48KoxqzoLF24A7gwRzX/l6q7DeBB7+cI1MTd3i/fzVCv0ZIfS0IHH9Akuv3cyEwt5v2Zimqki6hT5po40H1hRcJWBSxjfOkng55vsq3A+csB/5b9/qrbtqbp8kTjGL8JfAx/dapvs8Hbo/Yzy97wIZAaKvsGfViSMQgLRAQhy6UmjkgqRkDXBM453Kp0+OAX+do6wuS0ttDAMRxnlqeL8QalR4PYZRjeNkz6o9CcWGSRh7McuqlVvYteK9bNcgTCc8xXScQ8PnA8YsVUUhpsO+MySSEBtMhdvihSmAUwCOBmdYjT7+qDUsA7tX3k4DPBc5ZCvyHEN2PyES3wWKHfy97E5To2YoiOHS3II/+nRziGLcKwVYEo64WKkt7Br9RaCkubZG92q+BnR1yzmeAF7DUxRo5nFOxiP1qIbQg4Jmqfr1JeDIyCv2j/D1fazwK7KgURjlm7faART/g7jzbukxSlcKCt2F0FrBVUvQs8BMsav+NkHPnA+/RRHpOKjQunY0lLB2s3w9sCFGxZc+oJ4HPAq9rQGqwyqGf5tneejG9LodkTgNeE0DYgNVXhFGTVFZbnirvRElpvSdJj0dAn2XJKIeKpsoGpGVHZmER8Ikx29ogQ12P5a/IIilD9SyTgBOynHeCpHO3pC4O3YBli9+r++zHgsgXUiIqlpO2TR7+Wk8NTpAPdDfRU+K/kC8WFjGvky2aj0XG79NAPhsC6Z2NQqoyKk2XvVyqyENKknSN/CkqnVGOPiVJaBPDemLByxexqPX4bq5/S/5ZCssMn65oxTJB+EuwHNNfY7mkb4qpS4GXsEzsZOACD6m9HaHfF0sD/GvAPj6H1WAsp8RUqkUCwzT7Xc14pxjQoYF7AKuheJWuWdgpgv0NZAr/a8TwtGzi9MC9JupeJ5Gpt6gRAKiRaj4/cM1I2dKbxJha7/y0JszdMaIsFcsoR8Plb3wQGKABOSy/pl0RiQ6912DZ1veIMY65+2Qv5oqx2Wg2cAtWn3EcmVhku9BkhyS1j37vqf7UqE9tktoVcoyPKh3NZTenCwQ0CQQMF2NqNIA1YpKzDQ9pwLYRngAkB4gYKYk4WQzYK0BwWK8DOvZHhbC2iUk7KBMqtFzsKoGEibIhPb3Z+JIM9x4sjfGEVIij5/Van6P9yXJ8e6mtTXn0cbteLWLU03lC6rFCs8MVcTlVKt1lkTtkezcpBvmLcmDUHOBrCt1ka2MccJEXsNwnaPwjPUyU0mI349PEK9okR9wxanHMUE2Uj8hXa5Cb0IvsxS+jBVyuEvC4Ru9HhVErsCKUqIUgLsXeT7PxDIGCFuBeLA3RkkOi+khNPV3gszrkeXwElXyb7t1IvKonRw2Svl8KjT5aakYtUeQhrDaiU+J/0AMGnZ4b0AvLAjvU9hdYsu46+VczQ6DzaViauzWBmdkiyWyUCtwaEh5aJS1RS6Z24rCeab+O+c/UV2PRh/AM9xC1OQv4z1L5URdhtQTZmNQmP+YDcjxHavYej2Va3ys9f76cxa1yZvvJN3otxIn8kCSyOQHt8TNJcp366ageWwHypBhYA/xJUvBpSdYgTazgMw2WvdsgRmZTobcX2vk4jJorFBZGe7GFZou7QUotwGYsB3Sq1OBKzdT+wD8B/6ZzF2pg0oLjhdI69a2nwE+D0OYfZId6SXK/IqmbIUDQ3aKAp7Hs9OIc54wHvlgKeD5WM25oDibeU0A/LpDtGyXGPItldxuE2M6KCcmz0Zc0GWp0jxFSTylJ3MwC238CODcEbHTqt/OKLVEzyV62u7dAJoFtMzBFyK6HfKsGMWdhQkwCq2xaq4GcQKZ+cHUCTAIr4jmcBVCNKIXqm5jFWHYmAJsdNWPlYx0e0rqR5Df1+IwcWjfr9wkgJUGbc/w2gPwWi8diVEMOhJhOcBAv9iZESkZ/esKMWubN7pSQ25yE2j7UjZtycrEZ1Z6FIakcdisuPQx8Qn3ahaXZ67GSsREJ3WMuljk+5KFAt2L+Kwm0312p9RvFZtTzhFeIOl+hkD0cZgmqzxDy+h2WHjlN/tUI4IcJDOIE2TsnqTMVXdmn8NciLJU/toB7zMgxpq0UsKFWVEY9qBuFUY1mfWPMe58j/2MVmZTEbwRlN+qc2ZqFZ2MpiEJVXiNWFrBUx5Zi9Q7bydSPPyVkOCpm+9Pka6ay2PKXSwEmtuiVziHymyMYy0Ys6bZT4ZXJGqA3FbY5P8TvWixJu74bNXtdjt++qQmwN+S8hyVtzgFvxLLGz0n9XhoR9v80R1jtz1gSsuh+lDP095F7NWG7HMRt2DKZAfLeB2Kp+QHejHNbtr0s9fdCjna3YRHrdVIvQbpFkhG2wK1eTBgC3OxJUxhdiqVSGugafD2kfm6TZnlV4GqMJukosgdq03KKp5SKUWBJvy9SWHqkU76GK97/5wjXzMGi7m0KUb0U+P1/NWD3c2Tp1iKpzTY5zq90c6+hWO3eZ73YZCHPuk8uwfpShZAArsUSeIVA8mYN3oiITEJ2o1UDFyxxXiAb1zOL53+N1OszEZgElor5AhZFX50DREWht3X/gpiUD6MA/gZb/tIS45p2RR+uxIKbi2Pec4cY3Bsr8gz2p68+u4XbjqZjQd8U8QtBt2tS9MFSMVtjTtDNWPxzdRJ+Rb4q7Ca9viabMUS2wBWDtGER6BY95JoE+rpeDmO9jP9mrKJptGcfemNLagbp3hfoGd8JUZdxaJ4Hhm4W6GnQywGI/QJFu7C1W4nuuZRkzcQgGeCDMaUtKjV5yNOBgp2SopqA9H5X57wsCd6t96Spnkwd+gG6lhokSklusdNCcWkHmaTdcKnRASHGvi+WCr9LiLOG4q1daiN8uVFZM6rYtA8L2PaVdH2O8CRmCiv/+oYXN3yHCqdK2067QzZhCrmLTHoJ0juwtDfBPpwqyS7pLmM9KpBRDjTk2gYnFTinNcE+/FbO+Z/IfwOUY55R+VKSC6Gd79efEm1YVYmMqsvzuuEJ9mGL9/k7UoOddL/1wbvGRg0sgFENBd57VBY/bHiIWn7XS9QEom9MH8aoIQW6BjdjBTE+MJmpPqWAn1cyo4ZpgOcSvmA6Dn21gGsHYPHAQuh27C8k/EzwnZ7qe11IcFg5q75GLMg6jcxeDv1CzruXTFwubvtjC3zOGcTPsC4n965hg2SnNmHR/XFYCGkMhYWsEpeo2ZpNb2KphiXycfplOb8P+e0WOSEBO3MJ0XfmdHSj93kNFgD2N/3dhMUgH/GOvZo0k5KQqAewdMAULIVwEV3X507BSpX303WH5rh0PflvfOhosKTq/hjXvIUFV6diKYv5WHWto3M1hv4WcFcVQ/UlvZDtPjLbBzQnBIsnY3XgDQm09SgWXY9Dl2PFNf+HxRcv0zvYvkoHNVkv8Zztsofno7zP1ybU5hyy17zHpQ+JUY/EuOZeMWqcbLCfnLw1cO7VlYL6/ALDXyfQ3njN1KRmaX2eg+nqORbStS5jBlbYsgPLCt9VCYyqJ1Ml1K5ZeFC26cU8VI6D5AOTVPWym3HrzE/DajJSZLZc6MTiflukSX4AfKtYjCrURk0XFB0qI9td+fFtMfyhj8nwNxbhuV/Q4EehpwRkBssfC0ZH2rEC1UnlbKOWEL6h1Lc1yLvouo/snhhtL6Z4+7SeiJWYRandWEvXhWg7sULRH2J7Vjh6Bss+v1/It+xS8U41uQxva8D4u6zsj4lejL9A9qBPkRjVqVDQVKG57ugWuRVu29PdckeuVFgpOB5uLOYR/Q9fim6j9tJ1Sc6/eJ+bAiGYKNSEVbP2LmJoy+2qvDLHOZ+Qu4H8Qx8oLcKWIm3IMh6utnAZR+6Le1TBhL9F2395n7/ufX4+RtimoVi6PqD23aQI0khsiarzCVcK3bmoyj1YKbRfgnY2tgIeqUWXDqlNZGYl5PA+QWZv19Fk1vE6tfcs0f7C57aEohBxVOAbAi7+ZiO/w1LuW7FSbHfuFqxWLyy6UqfjN3va4wrZuD1JzKpCqdFj0i4Z0qEBkFGPFUaO1m+H9d1XCx/1wi/7KR3VY6VnzpH9Epn/tPpyQDvcisU1l2F1hc1i4CDveb+FlV1fia1LPipgYjJWHzdMyOlEwdyRed5/I7aBlYtAjOHo0GFsAcImTZh1WbTAEqIveLuWaH/xVxRGvUT8dUO5KKl4YClpkKQmV/rjQQrPvxXEqBOEdPph8bKN2I5crwvtuJ273k00XDa1g2Q2LknERm0nuTW7xwrtKsVNelTHuTKoHBjVFEBgfq3cCDIr4sdxZIa2KUe754ao7UEBv8enIHAYV2VUhkbJNznHcyw3kKlAXY1tW12HFY7c4V37SV0bVl3k/izMZ8xjZKLbk7DIt//7/3iIbiEJ7bN3rDDqTb27HJH7G4Y7xYBJZLbdIWAfXRQ7LNTkHOa+AWmtCxwPFto06N3tMdtQZZRRK1Y0MttzMpcqUnCKBnwdmZLkuGGl+9X+Q1lAUCrLeJSd7S6HDq3wPPrdwL9j8TEXN3vSG9Bs/T0bW/14Q4hk1ZL9/xfDHN+ypHIoaXZpho9jKQG3U+TlskF+nMyPYLuCygNSkbOxSqF7vXPmkCnd8re3OeiBlZ2erXq9ivqy004ywVu3qeI6vf/EO28lFrJagG2hsFDX7hGDT8FSD/7KRz9m2EFmsfRrel+F1WS4EjK3s3K63CSsXBYJXI1txvErfZ+HpRH8aqErNMDzFBlZQaZsK0ivyDn3ndGfk9lA+BVJ53Is5/QiFpR1+8w+Lsa3lgujjuYG9VWqRiaqjKpSlVFVqjKqyqgqVRlVpS70/6sR4rd6w2m6AAAAAElFTkSuQmCC" alt="五惠食品 Logo">
+      <div><div class="eb">五惠食品　品保課</div><h2>充填溫度日報</h2></div>
+    </div>
+    <div class="login-body">
+      <div class="field">
+        <label for="acc">帳號</label>
+        <input id="acc" name="username" autocomplete="username" autocapitalize="off" spellcheck="false" required>
+      </div>
+      <div class="field">
+        <label for="pw">密碼</label>
+        <div class="pwbox">
+          <input id="pw" name="password" type="password" autocomplete="current-password" required>
+          <button type="button" class="pweye" id="pwEye" aria-pressed="false">顯示</button>
+        </div>
+        <div class="capshint" id="capsHint" hidden>大寫鎖定（Caps Lock）開著</div>
+      </div>
+      <button class="primary go" type="submit" id="loginBtn">登入</button>
+      <div class="msg" id="loginErr" role="alert" hidden></div>
+      <p class="note">輸入公司給你的帳號即可，不用打信箱。<br>閒置 15 分鐘會自動登出；溫度資料只在這台電腦處理，不會上傳。</p>
+    </div>
+  </form>
+</div>
+
+<main id="appView" hidden>
   <section id="uploadCard">
     <div class="steps">
       <div class="s on"><span class="n">1</span>上傳溫度紀錄檔</div><span class="arrow"></span>
@@ -822,6 +874,111 @@ $("#file").addEventListener("change",e=>handleFile(e.target.files[0]));
 ["dragenter","dragover"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add("over");}));
 ["dragleave","drop"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove("over");}));
 drop.addEventListener("drop",e=>handleFile(e.dataTransfer.files[0]));
+
+/* ============================== 登入與閒置登出 ==============================
+ * 帳號放在共用的 Supabase 專案（smart-equipment-patrol），本系統帳號一律是「帳號@filltemp.local」，
+ * 使用者只打帳號，網域由程式補上；其他系統（@packing.local 等）的帳號無法登入本系統。
+ * 下面兩個值是公開金鑰，放在前端是正常的。
+ * 閒置 15 分鐘自動登出：登出前 1 分鐘提醒；同一台電腦開多個分頁時共用「最後操作時間」。 */
+const AUTH = {
+  API: "https://vnncuksjvdsxwveomoww.supabase.co",
+  KEY: "sb_publishable_Bloy5WhUpWGd7G0Uh_Kmdw_UB4dUNEo",
+  MAIL: "@filltemp.local",
+  SS: "filltemp.session", LAST: "filltemp.lastActive", NOTICE: "filltemp.idleLoggedOut",
+  LIMIT: 15*60*1000, WARN: 60*1000
+};
+const store = {
+  get(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } },
+  set(k,v){ try{ localStorage.setItem(k,v); }catch(e){} },
+  del(k){ try{ localStorage.removeItem(k); }catch(e){} }
+};
+let sess=null;
+function loadSession(){ try{ sess=JSON.parse(store.get(AUTH.SS)||"null"); }catch(e){ sess=null; } }
+function saveSession(j){ sess={access:j.access_token,refresh:j.refresh_token,exp:Date.now()+(j.expires_in||3600)*1000}; store.set(AUTH.SS,JSON.stringify(sess)); }
+function jwtPayload(t){ try{ const b=t.split(".")[1].replace(/-/g,"+").replace(/_/g,"/"); return JSON.parse(decodeURIComponent(escape(atob(b)))); }catch(e){ return {}; } }
+const halfWidth = s => String(s||"").normalize("NFKC").replace(/\s+/g,"");
+const DB_HOST = AUTH.API.replace(/^https?:\/\//,"");
+function netFetch(url,opts){
+  return fetch(url,opts).catch(()=>{ throw new Error(`連不到登入伺服器（${DB_HOST}）。\n這不是帳號密碼的問題，是這台電腦連不出去。\n請先確認網路正常；若其他網站開得起來，請 IT 把這個網址加入白名單。`); });
+}
+async function authToken(grant,body){
+  const r=await netFetch(`${AUTH.API}/auth/v1/token?grant_type=${grant}`,{method:"POST",headers:{apikey:AUTH.KEY,"Content-Type":"application/json"},body:JSON.stringify(body)});
+  const j=await r.json().catch(()=>({}));
+  if(!r.ok){ const e=new Error(j.error_description||j.msg||`登入失敗（${r.status}）`); e.status=r.status; throw e; }
+  saveSession(j); return j;
+}
+const signIn  = (acc,pw) => authToken("password",{email:acc.toLowerCase()+AUTH.MAIL,password:pw});
+const refresh = () => authToken("refresh_token",{refresh_token:sess.refresh});
+
+/* 撤銷這組登入（被複製走的權杖也失效），再清掉本機狀態 */
+function signOut(reason){
+  if(sess&&sess.access){ try{ fetch(`${AUTH.API}/auth/v1/logout`,{method:"POST",keepalive:true,headers:{apikey:AUTH.KEY,Authorization:"Bearer "+sess.access}}).catch(()=>{}); }catch(e){} }
+  store.del(AUTH.SS); store.del(AUTH.LAST); sess=null;
+  if(reason){ try{ sessionStorage.setItem(AUTH.NOTICE,reason); }catch(e){} }
+}
+/* ---- 閒置計時 ---- */
+const Idle = (()=>{
+  let timer=null, lastWrite=0, box=null;
+  const EVENTS=["pointerdown","pointermove","keydown","wheel","touchstart","scroll"];
+  const last=()=>{ const v=Number(store.get(AUTH.LAST)); return v>0?v:0; };
+  function touch(){ const now=Date.now(); if(now-lastWrite<5000) return; lastWrite=now; store.set(AUTH.LAST,String(now)); hide(); }
+  function show(secs){ if(!box){ box=document.createElement("div"); box.id="idleWarn"; box.setAttribute("role","alertdialog"); box.setAttribute("aria-live","assertive"); document.body.appendChild(box); }
+    box.innerHTML=`<b>閒置太久，${secs} 秒後自動登出。</b>　動一下滑鼠或按任意鍵即可繼續使用。`; box.hidden=false; }
+  function hide(){ if(box) box.hidden=true; }
+  function logout(reason){ stop(); signOut(reason); location.reload(); }
+  function check(){
+    if(!store.get(AUTH.SS)){ logout(null); return; }            // 另一個分頁已登出
+    const idle=Date.now()-(last()||Date.now());
+    if(idle>=AUTH.LIMIT){ logout("閒置超過 15 分鐘，已自動登出，請重新登入。"); return; }
+    if(idle>=AUTH.LIMIT-AUTH.WARN) show(Math.ceil((AUTH.LIMIT-idle)/1000)); else hide();
+  }
+  function onStorage(e){ if(e.key===AUTH.SS&&!e.newValue) logout(null); if(e.key===AUTH.LAST) check(); }
+  function onVisible(){ if(!document.hidden) check(); }
+  function start(){ if(timer) return; lastWrite=0; touch();
+    EVENTS.forEach(ev=>addEventListener(ev,touch,{passive:true,capture:true}));
+    addEventListener("storage",onStorage); document.addEventListener("visibilitychange",onVisible); timer=setInterval(check,1000); }
+  function stop(){ if(timer) clearInterval(timer); timer=null;
+    EVENTS.forEach(ev=>removeEventListener(ev,touch,{capture:true}));
+    removeEventListener("storage",onStorage); document.removeEventListener("visibilitychange",onVisible); hide(); }
+  /* 上次操作已超過 15 分鐘（例如隔天才打開），登入狀態直接作廢 */
+  function expireIfStale(){ if(!store.get(AUTH.SS)) return; const l=last(); if(l&&Date.now()-l>=AUTH.LIMIT) signOut("上次操作已超過 15 分鐘，請重新登入。"); }
+  return {start,stop,expireIfStale};
+})();
+
+/* ---- 畫面切換 ---- */
+function showLogin(){
+  $("#bootView").hidden=true; $("#appView").hidden=true; $("#whoBox").hidden=true; $("#loginView").hidden=false;
+  let why=null; try{ why=sessionStorage.getItem(AUTH.NOTICE); sessionStorage.removeItem(AUTH.NOTICE); }catch(e){}
+  if(why){ $("#loginErr").textContent=why; $("#loginErr").hidden=false; }
+  $("#acc").focus();
+}
+function showApp(){
+  const p=jwtPayload(sess.access); const acc=String(p.email||"").replace(AUTH.MAIL,"");
+  $("#who").textContent=(p.user_metadata&&p.user_metadata.display_name)||acc;
+  $("#bootView").hidden=true; $("#loginView").hidden=true; $("#appView").hidden=false; $("#whoBox").hidden=false;
+  Idle.start();
+}
+$("#pwEye").addEventListener("click",()=>{ const show=$("#pw").type==="password"; $("#pw").type=show?"text":"password";
+  $("#pwEye").textContent=show?"隱藏":"顯示"; $("#pwEye").setAttribute("aria-pressed",String(show)); $("#pw").focus(); });
+["keydown","keyup"].forEach(ev=>$("#pw").addEventListener(ev,e=>{ if(e.getModifierState) $("#capsHint").hidden=!e.getModifierState("CapsLock"); }));
+$("#loginForm").addEventListener("submit",async e=>{
+  e.preventDefault();
+  const acc=halfWidth($("#acc").value), pw=halfWidth($("#pw").value);
+  const err=$("#loginErr"); err.hidden=true;
+  if(!acc||!pw){ err.textContent="請輸入帳號和密碼。"; err.hidden=false; return; }
+  const b=$("#loginBtn"); b.disabled=true; b.textContent="登入中…";
+  try{ await signIn(acc,pw); $("#pw").value=""; showApp(); }
+  catch(x){ err.textContent=/invalid login|invalid_grant|credentials/i.test(x.message)||x.status===400
+      ? "帳號或密碼不對，請再試一次。\n可按密碼欄右邊的「顯示」，核對有沒有打錯。" : x.message; err.hidden=false; }
+  finally{ b.disabled=false; b.textContent="登入"; }
+});
+$("#logoutBtn").addEventListener("click",()=>{ Idle.stop(); signOut(null); location.reload(); });
+
+/* ---- 啟動：已登入過且沒閒置超時就直接續用 ---- */
+Idle.expireIfStale();
+loadSession();
+if(sess&&sess.refresh){ refresh().then(showApp).catch(()=>{ signOut(null); showLogin(); }); }
+else showLogin();
 window.__test={analyze,readXlsx,makePdf,buildPages,get state(){return STATE;}};
 </script>
 </body>
