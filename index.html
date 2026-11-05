@@ -865,7 +865,7 @@ async function makePdf(A){
     jpgs.push(new Uint8Array(await blob.arrayBuffer()));
   }
   const pdf=buildPdf(jpgs,cv.width,cv.height,`${CFG.title} ${A.date}`);
-  const name=`PE袋充填溫度日報_${A.date}.pdf`;
+  const name=`${A.date} PE袋充填溫度日報.pdf`;
   const dl=await DL;
   if(dl){ try{ await dl.save({filename:name,data:pdf}); return {name,pages:N,status:"saved"}; }
     catch(e){ if(e&&e.code==="declined") return {name,status:"declined"}; throw new Error((e&&e.message)||"瀏覽器不允許下載"); } }
