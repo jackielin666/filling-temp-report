@@ -116,6 +116,8 @@ button.link:hover{text-decoration:underline}
 .lg-pre{width:18px;height:2px;background:var(--pre)}
 .lg-dot{width:8px;height:8px;border-radius:50%;background:var(--red)}
 .lg-std{width:18px;height:0;border-top:2px dashed var(--red)}
+.lg-gap{width:14px;height:12px;background:repeating-linear-gradient(45deg,rgba(120,120,112,.45) 0 1px,rgba(120,120,112,.14) 1px 5px)}
+.legend .lg-gapitem{display:none} .has-gaps .legend .lg-gapitem{display:inline}
 .lg-band{width:14px;height:12px;background:var(--accent-soft);border:1px solid var(--accent-mid)}
 .chart{position:relative;width:100%}
 .chart canvas{display:block;width:100%}
@@ -217,10 +219,10 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px}
         <span class="or">或</span>
         <span class="btn">選擇檔案</span>
         <span class="t2">
-          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg>支援 .xlsx／.csv</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg>支援 Excel（.xlsx）、CSV、Tab 分隔文字檔</span>
           <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>檔案只在這台電腦處理，不會上傳到網路</span>
         </span>
-        <input type="file" id="file" accept=".xlsx,.csv">
+        <input type="file" id="file" accept=".xlsx,.xlsm,.xls,.csv,.txt,.tsv">
       </label>
     </div>
   </section>
@@ -228,19 +230,19 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px}
   <section id="out"></section>
 
   <section class="card guide" id="guide">
-    <h2>上傳前，請在 Excel 確認 3 件事</h2>
-    <div class="lead">依現場充填紀錄標註即可；缺少任何一項，系統會指出第幾列，修正後重新上傳。</div>
+    <h2>上傳前，請在 Excel 標註 2 件事</h2>
+    <div class="lead">依現場充填紀錄標註即可；標註有誤時，系統會指出第幾列，修正後重新上傳。標題列和 D2 都不用填。</div>
     <div class="guide-grid">
       <div class="xl">
         <div class="bar"><i></i>範例：2026-10-14.xlsx</div>
         <table>
           <tr class="colh"><th></th><th>A</th><th>B</th><th>C</th><th class="hl">D</th><th class="hl">E</th></tr>
           <tbody>
-          <tr><th>1</th><td class="h">日期</td><td class="h">時間</td><td class="h">AI1</td><td class="h">基準值</td><td class="h">品項</td></tr>
-          <tr><th>2</th><td></td><td></td><td>瞬間值</td><td class="k c1">≥80<b class="bd">1</b></td><td></td></tr>
+          <tr><th>1</th><td class="h">日期</td><td class="h">時間</td><td class="h">AI1</td><td class="note">不用填</td><td class="note">不用填</td></tr>
+          <tr><th>2</th><td></td><td></td><td>瞬間值</td><td class="note">不用填</td><td></td></tr>
           <tr><th>3</th><td>10/14/26</td><td>05:40:45</td><td></td><td></td><td></td></tr>
           <tr class="gap"><th>⋮</th><td colspan="5">⋮</td></tr>
-          <tr><th>1987</th><td>10/14/26</td><td>08:26:05</td><td>82.6</td><td class="k">S<b class="bd">2</b></td><td class="k c3">D0111<b class="bd">3</b></td></tr>
+          <tr><th>1987</th><td>10/14/26</td><td>08:26:05</td><td>82.6</td><td class="k">S<b class="bd">1</b></td><td class="k c3">D0111<b class="bd">2</b></td></tr>
           <tr class="gap"><th>⋮</th><td colspan="5">⋮　第 1 趟充填中</td></tr>
           <tr><th>2136</th><td>10/14/26</td><td>08:38:30</td><td>89.1</td><td class="k">E</td><td></td></tr>
           <tr class="gap"><th>⋮</th><td colspan="5">⋮</td></tr>
@@ -251,11 +253,10 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px}
         </table>
       </div>
       <div class="rules">
-        <div class="rule c1"><span class="rn">1</span><div><h3>D2 填標準值</h3><p>例如 <b>≥80</b>（大於等於 80°C 為正常）。</p></div></div>
-        <div class="rule"><span class="rn">2</span><div><h3>D 欄標註每一趟的開始與結束</h3><p>開始、結束要成對，標在充填開始與結束的那一列。以下寫法都可以，大小寫不拘：</p>
+        <div class="rule"><span class="rn">1</span><div><h3>D 欄標註每一趟的開始與結束</h3><p>開始、結束要成對，標在充填開始與結束的那一列。以下寫法都可以，大小寫不拘：</p>
           <div class="chips"><span class="chip">開始</span><span class="chip">S</span><span class="chip">START</span><span class="chip e">結束</span><span class="chip e">E</span><span class="chip e">END</span></div></div></div>
-        <div class="rule c3"><span class="rn">3</span><div><h3>E 欄填品項</h3><p>只填在該品項<b>第一趟的開始列</b>；同品項後面幾趟不用再填，換品項時再填新品項。</p></div></div>
-        <div class="foot">D 欄第 3 列以下只放開始／結束標記，其他文字或數字請刪除。</div>
+        <div class="rule c3"><span class="rn">2</span><div><h3>E 欄填品項</h3><p>只填在該品項<b>第一趟的開始列</b>；同品項後面幾趟不用再填，換品項時再填新品項。</p></div></div>
+        <div class="foot">標準值固定為 <b>≥80°C</b>，D2 和標題列（基準值、品項）都不用填。<br>D 欄第 3 列以下只放開始／結束標記，其他文字或數字請刪除。<br>記錄器漏記的時段不會擋下，會在圖上標示「資料缺失」。</div>
       </div>
     </div>
   </section>
@@ -265,7 +266,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px}
 
 <script>
 "use strict";
-const CFG = { title:"PE袋充填機 進料端溫度紀錄日報", org:"五惠食品　品保課", point:"PE袋充填機 進料端（AI1）",
+const CFG = { stdValue:80, title:"PE袋充填機 進料端溫度紀錄日報", org:"五惠食品　品保課", point:"PE袋充填機 進料端（AI1）",
   startTokens:["開始","S","START"], endTokens:["結束","E","END"] };
 const C = {ink:"#2C2C2A",sub:"#6B6B66",muted:"#9A9A94",line:"#E3E3DE",grid:"#ECECE7",frame:"#BEBEB7",
   accent:"#1F4E79",band:"rgba(31,78,121,0.07)",bandEdge:"rgba(31,78,121,0.28)",pre:"#B5B5AE",red:"#C62828",bg:"#F6F6F4"};
@@ -357,12 +358,13 @@ async function readXlsx(buf){
   return sheets;
 }
 function readCsv(text){
-  const rows=new Map(); const lines=text.replace(/^﻿/,"").split(/\r?\n/);
+  const rows=new Map(); const lines=text.replace(/^\uFEFF/,"").split(/\r?\n/);
+  const sample=lines.slice(0,20).join("\n"); const SEP=(sample.split("\t").length>sample.split(",").length)?"\t":",";
   lines.forEach((ln,i)=>{ if(!ln.trim()) return;
     const cells=[]; let cur="",q=false;
     for(let k=0;k<ln.length;k++){ const ch=ln[k];
       if(q){ if(ch==='"'){ if(ln[k+1]==='"'){cur+='"';k++;} else q=false; } else cur+=ch; }
-      else if(ch==='"') q=true; else if(ch===','){cells.push(cur);cur="";} else cur+=ch; }
+      else if(ch==='"') q=true; else if(ch===SEP){cells.push(cur);cur="";} else cur+=ch; }
     cells.push(cur);
     rows.set(i+1,cells.map(s=>{ s=s.trim(); if(s==="") return undefined; return /^-?\d+(\.\d+)?$/.test(s)?parseFloat(s):s; }));
   });
@@ -429,9 +431,8 @@ function analyze(sheets){
     return {errors:[{msg:`有 ${marked.length} 個工作表都有開始／結束標註：${marked.map(c=>"「"+c.sh.name+"」").join("、")}。`,fix:"請只保留一個工作表的標註，避免系統讀錯資料。"}]};
   }
   const {sh,col}=marked[0];
-  // 2. 標準值
-  const std=parseStd((sh.rows.get(2)||[])[col.mark]);
-  if(!std) errors.push({msg:"D2 沒有填寫標準值，或格式無法辨識。",fix:"請在 D2 填入標準值，例如「≥80」。"});
+  // 2. 標準值：固定 ≥80°C（D2 不用填，填了也不讀）
+  const std={value:CFG.stdValue,op:"ge",label:"≥"+CFG.stdValue};
   // 3. 逐列讀資料
   const R=[]; let baseDate=null, unknown=[], badDate=[];
   const rnums=[...sh.rows.keys()].filter(r=>r>=3).sort((a,b)=>a-b);
@@ -445,7 +446,7 @@ function analyze(sheets){
     const v=typeof row[col.temp]==="number"?row[col.temp]:null;
     const mk=row[col.mark], it=row[col.item];
     if(mk!=null && !isStart(mk) && !isEnd(mk)) unknown.push({r,mk});
-    R.push({r,t,v,start:isStart(mk),end:isEnd(mk),item:it!=null?half(String(it)).trim():null});
+    R.push({r,t,v,start:isStart(mk),end:isEnd(mk),item:it!=null&&String(it).trim()!==""?half(String(it)).trim().toUpperCase():null});
   }
   if(baseDate==null && R.length) baseDate=R.find(x=>x.t!=null)?.t;
   if(badDate.length) errors.push({msg:`日期無法辨識：${rangesText(badDate)}。`,fix:"日期格式應為記錄器原始格式（月/日/年，例：10/14/26）。"});
@@ -477,14 +478,17 @@ function analyze(sheets){
   // 5. 充填段資料完整性
   const diffs=[]; for(let i=1;i<R.length;i++) if(R[i].t!=null&&R[i-1].t!=null) diffs.push(R[i].t-R[i-1].t);
   diffs.sort((a,b)=>a-b); const step=diffs.length?diffs[Math.floor(diffs.length/2)]:5000;
+  // 設備漏記屬非人為因素：不擋下，只把缺失區段記下來，畫在圖上
   for(const tp of trips){
-    const miss=[], gaps=[];
+    if(R[tp.s].t==null||R[tp.e].t==null){ errors.push({msg:`第 ${R[tp.s].r}～${R[tp.e].r} 列這一趟的開始或結束列沒有時間。`,fix:"請把開始／結束標在有時間的那一列。"}); continue; }
+    tp.gaps=[]; let last=-1;
     for(let i=tp.s;i<=tp.e;i++){
-      if(R[i].v==null||R[i].t==null) miss.push(R[i].r);
-      if(i>tp.s&&R[i].t!=null&&R[i-1].t!=null){ const d=R[i].t-R[i-1].t; if(d>step*1.5||d<=0) gaps.push(`第 ${R[i-1].r}～${R[i].r} 列（${fmtTime(R[i-1].t)} → ${fmtTime(R[i].t)}）`); }
+      const ok=R[i].v!=null&&R[i].t!=null;
+      if(!ok) continue;
+      if(last>=0&&(i-last>1||R[i].t-R[last].t>step*1.5)) tp.gaps.push({a:R[last].t,b:R[i].t});
+      last=i;
     }
-    if(miss.length) errors.push({msg:`充填段（第 ${R[tp.s].r}～${R[tp.e].r} 列）缺少溫度或時間：${rangesText(miss)}。`,fix:"記錄器可能漏記，請確認原始資料後重新上傳。"});
-    if(gaps.length) errors.push({msg:`充填段時間不連續：${gaps.slice(0,3).join("、")}${gaps.length>3?` 等 ${gaps.length} 處`:""}。`,fix:"記錄器可能中斷，請確認原始資料後重新上傳。"});
+    if(last<0) errors.push({msg:`第 ${R[tp.s].r}～${R[tp.e].r} 列這一趟完全沒有溫度資料。`,fix:"請確認開始／結束標記的位置。"});
   }
   if(!trips.length&&!errors.length) errors.push({msg:"沒有找到完整的充填段。",fix:"請確認開始／結束標記。"});
   if(errors.length) return {errors};
@@ -494,12 +498,13 @@ function analyze(sheets){
   for(const tp of trips){
     let g=groups[groups.length-1];
     if(!g||g.item!==tp.item){ const same=groups.filter(x=>x.baseItem===tp.item).length; g={item:same?`${tp.item}（第${same+1}段）`:tp.item,baseItem:tp.item,trips:[]}; groups.push(g); }
-    const vs=[],red=[]; for(let i=tp.s;i<=tp.e;i++){ vs.push(R[i].v); if(below(R[i].v)) red.push(i); }
-    tp.n=g.trips.length+1; tp.max=Math.max(...vs); tp.min=Math.min(...vs); tp.avg=vs.reduce((a,b)=>a+b,0)/vs.length;
+    const vs=[],red=[]; for(let i=tp.s;i<=tp.e;i++){ const v=R[i].v; if(v==null||R[i].t==null) continue; vs.push(v); if(below(v)) red.push(i); }
+    tp.cnt=vs.length; tp.n=g.trips.length+1; tp.max=Math.max(...vs); tp.min=Math.min(...vs); tp.avg=vs.reduce((a,b)=>a+b,0)/vs.length;
     tp.red=red; tp.group=g; g.trips.push(tp);
   }
   const firstT=R.find(x=>x.v!=null)?.t ?? R[0].t;
-  return {errors:[],sheet:sh.name,std,R,trips,groups,below,step,date:fmtDate(Math.floor(firstT/DAY)*DAY)};
+  const hasGaps=trips.some(t=>t.gaps.length);
+  return {errors:[],sheet:sh.name,std,R,trips,groups,below,step,hasGaps,date:fmtDate(Math.floor(firstT/DAY)*DAY)};
 }
 
 
@@ -525,6 +530,21 @@ function drawChart(ctx,box,A,o){
   // 充填段色帶
   for(const tp of o.trips){ const a=Math.max(X0,xOf(R[tp.s].t)), b=Math.min(X1,xOf(R[tp.e].t)); ctx.fillStyle=C.band; ctx.fillRect(a,Y0,b-a,Y1-Y0);
     if(o.trips.length>1){ ctx.fillStyle=C.bandEdge; ctx.fillRect(a,Y0,.8*k,Y1-Y0); ctx.fillRect(b-.8*k,Y0,.8*k,Y1-Y0); } }
+  // 資料缺失（設備漏記）：灰色斜線區塊＋文字
+  for(const tp of o.trips) for(const g of (tp.gaps||[])){
+    if(g.b<tA||g.a>tB) continue;
+    const a=Math.max(X0,xOf(g.a)), b=Math.min(X1,xOf(g.b)), w=Math.max(b-a,2*k);
+    ctx.save(); ctx.beginPath(); ctx.rect(a,Y0,w,Y1-Y0); ctx.clip();
+    ctx.fillStyle="rgba(120,120,112,0.14)"; ctx.fillRect(a,Y0,w,Y1-Y0);
+    ctx.strokeStyle="rgba(120,120,112,0.45)"; ctx.lineWidth=.8*k;
+    for(let x=a-(Y1-Y0);x<b;x+=6*k){ ctx.beginPath(); ctx.moveTo(x,Y1); ctx.lineTo(x+(Y1-Y0),Y0); ctx.stroke(); }
+    ctx.restore();
+    ctx.fillStyle="#5E5E58"; ctx.font=`600 ${9.5*k}px ${FONT}`; ctx.textAlign="center"; ctx.textBaseline="top";
+    const lab="資料缺失"; const lw=ctx.measureText(lab).width;
+    const cx=Math.min(Math.max((a+b)/2,X0+lw/2+2*k),X1-lw/2-2*k);
+    ctx.fillStyle="rgba(255,255,255,.9)"; ctx.fillRect(cx-lw/2-3*k,Y0+3*k,lw+6*k,14*k);
+    ctx.fillStyle="#5E5E58"; ctx.fillText(lab,cx,Y0+5*k);
+  }
   // 格線
   ctx.lineWidth=.8*k; ctx.strokeStyle=C.grid;
   for(let v=yLo;v<=yHi+1e-9;v+=ys){ const y=yOf(v); ctx.beginPath(); ctx.moveTo(X0,y); ctx.lineTo(X1,y); ctx.stroke(); }
@@ -562,7 +582,7 @@ function drawChart(ctx,box,A,o){
       ctx.font=`600 ${10.5*k}px ${FONT}`; const w=ctx.measureText(s).width; if(w>(b-a)+40*k&&!o.labelOf) continue;
       ctx.fillStyle=tp.red.length?C.red:C.accent; ctx.fillText(s,Math.min(Math.max((a+b)/2,X0+w/2),X1-w/2),Y0-4*k); } }
   // 最低點標示
-  if(o.annotateMin){ for(const tp of o.trips){ let mi=tp.s; for(let i=tp.s;i<=tp.e;i++) if(R[i].v<R[mi].v) mi=i;
+  if(o.annotateMin){ for(const tp of o.trips){ let mi=-1; for(let i=tp.s;i<=tp.e;i++) if(R[i].v!=null&&R[i].t!=null&&(mi<0||R[i].v<R[mi].v)) mi=i; if(mi<0) continue;
       const x=xOf(R[mi].t), y=yOf(R[mi].v), bad=A.below(R[mi].v);
       ctx.strokeStyle=bad?C.red:C.ink; ctx.lineWidth=1.2*k; ctx.beginPath(); ctx.arc(x,y,4.2*k,0,Math.PI*2); ctx.stroke();
       const s=`最低 ${R[mi].v.toFixed(1)}°C　${fmtTime(R[mi].t)}`; ctx.font=`600 ${10*k}px ${FONT}`; const w=ctx.measureText(s).width+10*k, h=16*k;
@@ -604,7 +624,7 @@ function mountChart(el,A,o,height){
 
 /* ============================== 畫面 ============================== */
 let STATE=null;
-const LEGEND=`<div class="legend"><span><i class="lg-band"></i>充填段</span><span><i class="lg-fill"></i>充填段溫度</span><span><i class="lg-pre"></i>非充填段</span><span><i class="lg-dot"></i>低於標準</span><span><i class="lg-std"></i>標準線</span></div>`;
+const LEGEND=`<div class="legend"><span><i class="lg-band"></i>充填段</span><span><i class="lg-fill"></i>充填段溫度</span><span><i class="lg-pre"></i>非充填段</span><span><i class="lg-dot"></i>低於標準</span><span><i class="lg-std"></i>標準線</span><span class="lg-gapitem"><i class="lg-gap"></i>資料缺失（設備漏記）</span></div>`;
 function setStep(n){ document.querySelectorAll(".steps .s").forEach((s,i)=>s.classList.toggle("on",i<n)); }
 function showError(fileName,res){
   setStep(1);
@@ -631,7 +651,7 @@ function showResult(A){
       <button class="link" data-z="${gi}">＋ 顯示單趟放大圖（${ts.length}）</button>
       <div class="zoom" id="z${gi}" hidden></div></section>`;
   });
-  $("#out").innerHTML=html;
+  $("#out").innerHTML=html; $("#out").classList.toggle("has-gaps",!!A.hasGaps);
   A.groups.forEach((g,gi)=>mountChart($("#c"+gi),A,{i0:g.trips[0].s,i1:g.trips[g.trips.length-1].e,trips:g.trips,labels:true},330));
   document.querySelectorAll("[data-z]").forEach(b=>b.addEventListener("click",()=>{
     const gi=+b.dataset.z, z=$("#z"+gi), g=A.groups[gi];
@@ -650,9 +670,17 @@ async function handleFile(f){
   try{
     const buf=await f.arrayBuffer();
     let sheets;
-    if(/\.csv$/i.test(f.name)){ let txt=new TextDecoder("utf-8").decode(buf); if(txt.includes("\uFFFD")) txt=new TextDecoder("big5").decode(buf); sheets=readCsv(txt); }
-    else if(/\.xlsx$/i.test(f.name)) sheets=await readXlsx(buf);
-    else throw new Error("只支援 .xlsx 或 .csv 檔。若是舊版 .xls，請先在 Excel「另存新檔 → Excel 活頁簿 (.xlsx)」。");
+    // 依檔案內容判斷格式（副檔名常常不準，例如內容是 .xlsx、檔名卻是 .XLS）
+    const head=new Uint8Array(buf.slice(0,8));
+    const isZip=head[0]===0x50&&head[1]===0x4B&&head[2]===0x03&&head[3]===0x04;
+    const isOle=head[0]===0xD0&&head[1]===0xCF&&head[2]===0x11&&head[3]===0xE0;
+    if(isZip) sheets=await readXlsx(buf);
+    else if(isOle) throw new Error("這是舊版 Excel 97-2003（.xls）格式，目前還不支援。請在 Excel 按「另存新檔」，存成「Excel 活頁簿 (.xlsx)」後再上傳。");
+    else {
+      let txt=new TextDecoder("utf-8").decode(buf); if(txt.includes("\uFFFD")) txt=new TextDecoder("big5").decode(buf);
+      if(/^\s*</.test(txt)) throw new Error("這個檔案的內容是網頁格式，不是 Excel 或 CSV。請用 Excel 打開後「另存新檔」成 .xlsx 再上傳。");
+      sheets=readCsv(txt);
+    }
     const res=analyze(sheets);
     if(res.errors.length){ showError(f.name,res); return; }
     res.fileName=f.name;
@@ -732,20 +760,21 @@ function table(F,cols,rows,cap,o={}){
 }
 function tripRow(A,t,withItem,firstOfGroup){
   const R=A.R; const n=R[t.e].r-R[t.s].r+1;
-  const r=[`第${t.n}趟`,fmtTime(R[t.s].t),fmtTime(R[t.e].t),fmtDur(R[t.e].t-R[t.s].t),t.e-t.s+1,f1(t.max),{t:f1(t.min),bad:t.red.length>0},f1(t.avg),{t:t.red.length,bad:t.red.length>0}];
+  const r=[`第${t.n}趟`,fmtTime(R[t.s].t),fmtTime(R[t.e].t),fmtDur(R[t.e].t-R[t.s].t),t.cnt,f1(t.max),{t:f1(t.min),bad:t.red.length>0},f1(t.avg),{t:t.red.length,bad:t.red.length>0}];
   const row=withItem?[firstOfGroup?t.group.item:"",...r]:r; row._sep=firstOfGroup; return row;
 }
 const TCOLS=[{h:"趟次",w:58},{h:"開始",w:72},{h:"結束",w:72},{h:"時長",w:76},{h:"筆數",w:48},{h:"最高 °C",w:60},{h:"最低 °C",w:60},{h:"平均 °C",w:60},{h:"低於標準",w:64}];
 
 function legendBlock(F,A){
-  F.add(22,(ctx,y)=>{ const items=[["band","充填段"],["fill","充填段溫度"],["pre","非充填段"],["dot","低於標準"],["std",`標準 ${A.std.label}°C`]]; let cx=M+2; const yy=y+10;
+  F.add(22,(ctx,y)=>{ const items=[["band","充填段"],["fill","充填段溫度"],["pre","非充填段"],["dot","低於標準"],["std",`標準 ${A.std.label}°C`]]; if(A.hasGaps) items.push(["gap","資料缺失（設備漏記）"]); let cx=M+2; const yy=y+10;
     for(const [k,l] of items){
       if(k==="band"){ ctx.fillStyle="#E6ECF2"; ctx.fillRect(cx,yy-6,14,11); ctx.strokeStyle=C.bandEdge; ctx.lineWidth=.8; ctx.strokeRect(cx,yy-6,14,11); }
       if(k==="fill"){ ctx.fillStyle=C.accent; ctx.fillRect(cx,yy-1.2,18,2.4); }
       if(k==="pre"){ ctx.fillStyle=C.pre; ctx.fillRect(cx,yy-.8,18,1.6); }
       if(k==="dot"){ ctx.beginPath(); ctx.arc(cx+5,yy,3.5,0,7); ctx.fillStyle=C.red; ctx.fill(); }
       if(k==="std"){ ctx.strokeStyle=C.red; ctx.setLineDash([5,3]); ctx.lineWidth=1.2; ctx.beginPath(); ctx.moveTo(cx,yy); ctx.lineTo(cx+18,yy); ctx.stroke(); ctx.setLineDash([]); }
-      const off=k==="dot"?13:(k==="band"?20:24); const w=txt(ctx,l,cx+off,yy+3.5,{size:9.5,color:C.sub}); cx+=off+w+18; } });
+      if(k==="gap"){ ctx.save(); ctx.beginPath(); ctx.rect(cx,yy-6,14,11); ctx.clip(); ctx.fillStyle="rgba(120,120,112,0.18)"; ctx.fillRect(cx,yy-6,14,11); ctx.strokeStyle="rgba(120,120,112,0.6)"; ctx.lineWidth=.8; for(let q=-12;q<16;q+=4){ ctx.beginPath(); ctx.moveTo(cx+q,yy+5); ctx.lineTo(cx+q+11,yy-6); ctx.stroke(); } ctx.restore(); }
+      const off=k==="dot"?13:(k==="band"||k==="gap"?20:24); const w=txt(ctx,l,cx+off,yy+3.5,{size:9.5,color:C.sub}); cx+=off+w+18; } });
 }
 
 function buildPages(A){
