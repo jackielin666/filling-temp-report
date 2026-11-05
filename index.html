@@ -885,6 +885,7 @@ const AUTH = {
   KEY: "sb_publishable_Bloy5WhUpWGd7G0Uh_Kmdw_UB4dUNEo",
   MAIL: "@filltemp.local",
   SS: "filltemp.session", LAST: "filltemp.lastActive", NOTICE: "filltemp.idleLoggedOut",
+  ACC: "filltemp.lastAccount",   // 上次登入成功的帳號（只記帳號，不記密碼；登出後仍保留）
   LIMIT: 15*60*1000, WARN: 60*1000
 };
 const store = {
@@ -950,7 +951,8 @@ function showLogin(){
   $("#bootView").hidden=true; $("#appView").hidden=true; $("#whoBox").hidden=true; $("#loginView").hidden=false;
   let why=null; try{ why=sessionStorage.getItem(AUTH.NOTICE); sessionStorage.removeItem(AUTH.NOTICE); }catch(e){}
   if(why){ $("#loginErr").textContent=why; $("#loginErr").hidden=false; }
-  $("#acc").focus();
+  const lastAcc=store.get(AUTH.ACC);
+  if(lastAcc&&!$("#acc").value){ $("#acc").value=lastAcc; $("#pw").focus(); } else $("#acc").focus();
 }
 function showApp(){
   const p=jwtPayload(sess.access); const acc=String(p.email||"").replace(AUTH.MAIL,"");
@@ -967,7 +969,7 @@ $("#loginForm").addEventListener("submit",async e=>{
   const err=$("#loginErr"); err.hidden=true;
   if(!acc||!pw){ err.textContent="請輸入帳號和密碼。"; err.hidden=false; return; }
   const b=$("#loginBtn"); b.disabled=true; b.textContent="登入中…";
-  try{ await signIn(acc,pw); $("#pw").value=""; showApp(); }
+  try{ await signIn(acc,pw); store.set(AUTH.ACC,acc.toLowerCase()); $("#pw").value=""; showApp(); }
   catch(x){ err.textContent=/invalid login|invalid_grant|credentials/i.test(x.message)||x.status===400
       ? "帳號或密碼不對，請再試一次。\n可按密碼欄右邊的「顯示」，核對有沒有打錯。" : x.message; err.hidden=false; }
   finally{ b.disabled=false; b.textContent="登入"; }
