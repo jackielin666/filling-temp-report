@@ -97,6 +97,10 @@ kbd{display:inline-block;border:1px solid #C9C9C2;border-bottom-width:2px;border
 .errtable td{padding:10px;border-bottom:1px solid #F0DCDC;vertical-align:top}
 .errtable td.no{color:var(--red);font-weight:700;width:28px}
 .errtable td.what{min-width:260px}
+.pts{margin:0;padding-left:18px}
+.err .pts li{margin:0 0 2px}
+.err .pts li.judge{font-weight:700;color:var(--red);list-style:none;margin-left:-18px;margin-top:4px}
+.pts li.judge::before{content:"⇒ "}
 .errtable td.how{color:var(--ink);font-weight:600;min-width:200px}
 .errtable tr.key td{background:#FDECEC}
 .cellchip{font:700 16px/1.2 Consolas,"Segoe UI",monospace;color:#fff;background:var(--red);border:none;border-radius:6px;padding:5px 10px;cursor:pointer;white-space:nowrap}
@@ -479,7 +483,7 @@ function analyze(sheets){
   if(badDate.length) errors.push({cell:cellRanges(DL,badDate),title:"日期無法辨識。",fix:"日期應為記錄器原始格式，例如 10/14/26 或 2026/10/14。"});
   if(unknown.length){
     const vals=[...new Set(unknown.map(u=>String(u.mk)))].slice(0,4).map(s=>"「"+s+"」").join("、");
-    errors.push({cell:cellRanges(L,unknown.map(u=>u.r)),title:`${L} 欄有無法辨識的內容${vals}。`,fix:`${L} 欄（第 3 列以下）只能放開始／結束標記（S／E），請把這些內容刪除。`});
+    errors.push({cell:cellRanges(L,unknown.map(u=>u.r)),title:[`${L} 欄有無法辨識的內容：${vals}`,`${L} 欄只能放開始／結束標記（S／E）`],fix:`${L} 欄（第 3 列以下）只能放開始／結束標記（S／E），請把這些內容刪除。`});
   }
   // 依溫度走勢判斷：這一列之後約 2 分鐘，溫度上升或下降多少
   const trend=i=>{ const p=R[i]; if(p.t==null||p.v==null) return null;
@@ -492,36 +496,36 @@ function analyze(sheets){
     const x=R[i];
     if(x.item!=null){
       if(x.start||!open){ pendingItem=x.item; }
-      else errors.push({cell:IL+x.r,at:i,title:`品項「${x.item}」填在充填段中間。`,fix:`品項請填在該品項第一趟「開始」那一列的 ${IL} 欄。`});
+      else errors.push({cell:IL+x.r,at:i,title:[`品項「${x.item}」`,"填在充填段中間，不是開始那一列"],fix:`品項請填在該品項第一趟「開始」那一列的 ${IL} 欄。`});
     }
     if(x.start&&x.end){ errors.push({cell:cellOf(i),at:i,title:"同一列同時是開始和結束。",fix:"開始和結束請標在不同列。"}); open=null; continue; }
     if(x.start){
       if(open){
         const tr=trend(i);
         if(tr&&tr.d<=-3){
-          errors.push({cell:cellOf(i),at:i,key:true,title:`這格標的是「開始」，但上一趟（${cellOf(open.i)} 開始）還沒有結束；而且這一列之後溫度下降（${tTxt(tr)}），看起來是上一趟的「結束」打成了「開始」。`,fix:`請把 ${cellOf(i)} 改成 E。`});
+          errors.push({cell:cellOf(i),at:i,key:true,title:["這格標的是「開始」（S）",`上一趟（${cellOf(open.i)} 開始）還沒有結束`,`這一列之後溫度下降：${tTxt(tr)}`,"判斷：上一趟的「結束」打成了「開始」"],fix:`請把 ${cellOf(i)} 改成 E。`});
           trips.push({s:open.i,e:i,item:open.item}); open=null; continue;
         }
-        errors.push({cell:cellOf(open.i),at:open.i,title:`這一趟開始後，到下一個開始（${cellOf(i)}）之前都沒有「結束」。`,fix:`請在 ${cellOf(open.i)} 和 ${cellOf(i)} 之間，充填結束的那一列標上 E。`});
+        errors.push({cell:cellOf(open.i),at:open.i,title:["這一趟從這格開始",`到下一個開始（${cellOf(i)}）之前，都沒有「結束」`],fix:`請在 ${cellOf(open.i)} 和 ${cellOf(i)} 之間，充填結束的那一列標上 E。`});
       }
       if(pendingItem!=null){ curItem=pendingItem; pendingItem=null; }
-      if(curItem==null){ errors.push({cell:IL+x.r,at:i,title:"這是第一趟的開始，但沒有填品項。",fix:`請在 ${IL}${x.r} 填入品項，例如 D0111。`}); curItem="（未填品項）"; }
+      if(curItem==null){ errors.push({cell:IL+x.r,at:i,title:["這是第一趟的「開始」","但沒有填品項"],fix:`請在 ${IL}${x.r} 填入品項，例如 D0111。`}); curItem="（未填品項）"; }
       open={i,item:curItem};
     }
     if(x.end){
       if(!open){
         const tr=trend(i);
         if(tr&&tr.d>=3){
-          errors.push({cell:cellOf(i),at:i,key:true,title:`這格標的是「結束」，但前面沒有對應的開始；而且這一列之後溫度上升（${tTxt(tr)}），看起來是「開始」打成了「結束」。`,fix:`請把 ${cellOf(i)} 改成 S。`});
+          errors.push({cell:cellOf(i),at:i,key:true,title:["這格標的是「結束」（E）","前面沒有對應的「開始」",`這一列之後溫度上升：${tTxt(tr)}`,"判斷：「開始」打成了「結束」"],fix:`請把 ${cellOf(i)} 改成 S。`});
           if(pendingItem!=null){ curItem=pendingItem; pendingItem=null; }
           open={i,item:curItem??"（未填品項）"}; continue;
         }
-        errors.push({cell:cellOf(i),at:i,title:"這格標的是「結束」，但前面沒有對應的「開始」。",fix:`請在前面充填開始的那一列標上 S，或刪除 ${cellOf(i)} 這個多餘的 E。`}); continue;
+        errors.push({cell:cellOf(i),at:i,title:["這格標的是「結束」（E）","前面沒有對應的「開始」"],fix:`請在前面充填開始的那一列標上 S，或刪除 ${cellOf(i)} 這個多餘的 E。`}); continue;
       }
       trips.push({s:open.i,e:i,item:open.item}); open=null;
     }
   }
-  if(open) errors.push({cell:cellOf(open.i),at:open.i,title:"這一趟有開始，但後面沒有「結束」。",fix:"請在這一趟充填結束的那一列標上 E。"});
+  if(open) errors.push({cell:cellOf(open.i),at:open.i,title:["這一趟有「開始」","後面沒有「結束」"],fix:"請在這一趟充填結束的那一列標上 E。"});
   // 5. 充填段資料完整性
   const diffs=[]; for(let i=1;i<R.length;i++) if(R[i].t!=null&&R[i-1].t!=null) diffs.push(R[i].t-R[i-1].t);
   diffs.sort((a,b)=>a-b); const step=diffs.length?diffs[Math.floor(diffs.length/2)]:5000;
@@ -680,7 +684,7 @@ function showError(fileName,res){
     const cell=e.cell&&/^[A-Z]+\d+$/.test(e.cell)?`<button type="button" class="cellchip" data-cell="${esc(e.cell)}" title="點一下複製">${esc(e.cell)}</button>`:`<span class="cellplain">${esc(e.cell||"—")}</span>`;
     return `<tr class="${e.key?"key":""}"><td class="no">${k+1}</td><td>${cell}</td>
       <td class="num">${p&&p.t!=null?fmtTime(p.t):"—"}</td><td class="num">${p&&p.v!=null?p.v.toFixed(1)+"°C":"—"}</td>
-      <td class="what">${esc(e.title)}</td><td class="how">${esc(e.fix)}</td></tr>`; }).join("");
+      <td class="what">${Array.isArray(e.title)?`<ul class="pts">${e.title.map(l=>`<li${l.startsWith("判斷")?' class="judge"':""}>${esc(l)}</li>`).join("")}</ul>`:esc(e.title)}</td><td class="how">${esc(e.fix)}</td></tr>`; }).join("");
   $("#out").innerHTML=`<section class="card err" id="errCard" tabindex="-1">
     <div class="eh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 7v6"/><path d="M12 16.5v.5"/></svg>
       <h2>發現 ${n} 個問題，暫時無法產生日報</h2></div>
