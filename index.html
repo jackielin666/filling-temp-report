@@ -84,7 +84,26 @@ main{max-width:1120px;margin:0 auto;padding-block:28px 60px;padding-left:max(16p
 .rules .foot{border-top:1px dashed var(--line);padding-top:12px;color:var(--sub);font-size:13px}
 
 /* ---------- 錯誤 ---------- */
-.err{border:1px solid #F0C9C9;background:#FFFBFB}
+.err{border:2px solid var(--red);background:#FFFBFB;padding-top:0;overflow:hidden;outline:none}
+.err .eh{margin:0 -24px 12px;padding:14px 24px;background:var(--red);color:#fff}
+.err .eh svg{color:#fff!important}
+.err .eh h2{color:#fff!important;font-size:20px!important}
+.err .lead{margin:0 0 12px!important;color:var(--ink)!important}
+.errtip{background:#FFF4D6;border:1px solid #F2D58A;border-radius:8px;padding:10px 14px;font-size:14px;margin-bottom:14px}
+kbd{display:inline-block;border:1px solid #C9C9C2;border-bottom-width:2px;border-radius:4px;background:#fff;padding:0 6px;font:600 12.5px/1.6 "Segoe UI",sans-serif}
+.errwrap{overflow-x:auto}
+.errtable{width:100%;border-collapse:collapse;font-size:14px;min-width:720px}
+.errtable th{text-align:left;color:var(--sub);font-weight:600;font-size:12.5px;padding:8px 10px;border-bottom:1px solid var(--ink)}
+.errtable td{padding:10px;border-bottom:1px solid #F0DCDC;vertical-align:top}
+.errtable td.no{color:var(--red);font-weight:700;width:28px}
+.errtable td.what{min-width:260px}
+.errtable td.how{color:var(--ink);font-weight:600;min-width:200px}
+.errtable tr.key td{background:#FDECEC}
+.cellchip{font:700 16px/1.2 Consolas,"Segoe UI",monospace;color:#fff;background:var(--red);border:none;border-radius:6px;padding:5px 10px;cursor:pointer;white-space:nowrap}
+.cellchip:hover{background:#A51F1F}
+.cellplain{font-weight:700;color:var(--red);white-space:nowrap}
+.errmsg{margin-top:8px;font-size:13px;color:var(--sub);min-height:1px}
+@media (prefers-reduced-motion:no-preference){ .err{animation:errin .35s ease-out} @keyframes errin{from{transform:translateY(8px);opacity:.4}to{transform:none;opacity:1}} }
 .err .eh{display:flex;align-items:center;gap:10px;margin-bottom:4px}
 .err .eh svg{width:24px;height:24px;color:var(--red);flex:none}
 .err h2{margin:0;font-size:18px;color:var(--red)}
@@ -411,6 +430,12 @@ function findCols(sh){
     else if(/^AI\d|溫度/i.test(s)) col.temp=i; else if(/基準|標準|標記/.test(s)) col.mark=i; else if(/品項|品名/.test(s)) col.item=i; });
   return col;
 }
+function colLetter(i){ let s="",n=i+1; while(n>0){ const m=(n-1)%26; s=String.fromCharCode(65+m)+s; n=Math.floor((n-1)/26); } return s; }
+function cellRanges(L,nums){ // D 欄 [5,6,7,10] → "D5～D7、D10"
+  const out=[]; let a=nums[0],b=a;
+  for(let i=1;i<=nums.length;i++){ const x=nums[i]; if(x===b+1){b=x;continue;} out.push(a===b?`${L}${a}`:`${L}${a}～${L}${b}`); a=b=x; }
+  return out.length>5?out.slice(0,5).join("、")+` 等 ${out.length} 處`:out.join("、");
+}
 function rangesText(nums){ // [5,6,7,10] → "第5～7列、第10列"
   const out=[]; let a=nums[0],b=a;
   for(let i=1;i<=nums.length;i++){ const x=nums[i]; if(x===b+1){b=x;continue;} out.push(a===b?`第 ${a} 列`:`第 ${a}～${b} 列`); a=b=x; }
@@ -425,10 +450,10 @@ function analyze(sheets){
     return {sh,col,n,temps}; });
   const marked=cand.filter(c=>c.n>0);
   if(marked.length===0){
-    return {errors:[{msg:"檔案中找不到任何「開始／結束」標註。",fix:"請依現場充填紀錄，在 D 欄標註每一趟的開始與結束列（開始／結束、S／E、START／END 皆可）。"}]};
+    return {errors:[{cell:"D 欄",title:"檔案中找不到任何「開始／結束」標記。",fix:"請依現場充填紀錄，在 D 欄每一趟開始的那一列標 S、結束的那一列標 E。"}]};
   }
   if(marked.length>1){
-    return {errors:[{msg:`有 ${marked.length} 個工作表都有開始／結束標註：${marked.map(c=>"「"+c.sh.name+"」").join("、")}。`,fix:"請只保留一個工作表的標註，避免系統讀錯資料。"}]};
+    return {errors:[{cell:"—",title:`有 ${marked.length} 個工作表都有開始／結束標記：${marked.map(c=>"「"+c.sh.name+"」").join("、")}。`,fix:"請只保留一個工作表的標記（包含隱藏的工作表），避免系統讀錯資料。"}]};
   }
   const {sh,col}=marked[0];
   // 2. 標準值：固定 ≥80°C（D2 不用填，填了也不讀）
@@ -449,38 +474,60 @@ function analyze(sheets){
     R.push({r,t,v,start:isStart(mk),end:isEnd(mk),item:it!=null&&String(it).trim()!==""?half(String(it)).trim().toUpperCase():null});
   }
   if(baseDate==null && R.length) baseDate=R.find(x=>x.t!=null)?.t;
-  if(badDate.length) errors.push({msg:`日期無法辨識：${rangesText(badDate)}。`,fix:"日期格式應為記錄器原始格式（月/日/年，例：10/14/26）。"});
+  const L=colLetter(col.mark), IL=colLetter(col.item), DL=colLetter(col.date);
+  const cellOf=i=>L+R[i].r;
+  if(badDate.length) errors.push({cell:cellRanges(DL,badDate),title:"日期無法辨識。",fix:"日期應為記錄器原始格式，例如 10/14/26 或 2026/10/14。"});
   if(unknown.length){
     const vals=[...new Set(unknown.map(u=>String(u.mk)))].slice(0,4).map(s=>"「"+s+"」").join("、");
-    errors.push({msg:`D 欄有無法辨識的標記 ${vals}：${rangesText(unknown.map(u=>u.r))}。`,fix:"D 欄（第 3 列以下）只能填開始／結束標記，其他內容請刪除。"});
+    errors.push({cell:cellRanges(L,unknown.map(u=>u.r)),title:`${L} 欄有無法辨識的內容${vals}。`,fix:`${L} 欄（第 3 列以下）只能放開始／結束標記（S／E），請把這些內容刪除。`});
   }
+  // 依溫度走勢判斷：這一列之後約 2 分鐘，溫度上升或下降多少
+  const trend=i=>{ const p=R[i]; if(p.t==null||p.v==null) return null;
+    for(let j=i+1;j<R.length;j++){ const q=R[j]; if(q.t==null||q.v==null) continue; if(q.t-p.t>=120000) return {from:p.v,to:q.v,d:q.v-p.v}; }
+    return null; };
+  const tTxt=tr=>`${tr.from.toFixed(1)} → ${tr.to.toFixed(1)}°C`;
   // 4. 配對開始／結束、品項
   const trips=[]; let open=null, curItem=null, pendingItem=null;
   for(let i=0;i<R.length;i++){
     const x=R[i];
     if(x.item!=null){
       if(x.start||!open){ pendingItem=x.item; }
-      else errors.push({msg:`第 ${x.r} 列的品項「${x.item}」填在充填段中間。`,fix:"品項請填在該品項第一趟的「開始」那一列。"});
+      else errors.push({cell:IL+x.r,at:i,title:`品項「${x.item}」填在充填段中間。`,fix:`品項請填在該品項第一趟「開始」那一列的 ${IL} 欄。`});
     }
+    if(x.start&&x.end){ errors.push({cell:cellOf(i),at:i,title:"同一列同時是開始和結束。",fix:"開始和結束請標在不同列。"}); open=null; continue; }
     if(x.start){
-      if(open){ errors.push({msg:`第 ${R[open.i].r} 列有「開始」，但到第 ${x.r} 列下一個「開始」之前都沒有「結束」。`,fix:"請補上這一趟的「結束」標記。"}); }
+      if(open){
+        const tr=trend(i);
+        if(tr&&tr.d<=-3){
+          errors.push({cell:cellOf(i),at:i,key:true,title:`這格標的是「開始」，但上一趟（${cellOf(open.i)} 開始）還沒有結束；而且這一列之後溫度下降（${tTxt(tr)}），看起來是上一趟的「結束」打成了「開始」。`,fix:`請把 ${cellOf(i)} 改成 E。`});
+          trips.push({s:open.i,e:i,item:open.item}); open=null; continue;
+        }
+        errors.push({cell:cellOf(open.i),at:open.i,title:`這一趟開始後，到下一個開始（${cellOf(i)}）之前都沒有「結束」。`,fix:`請在 ${cellOf(open.i)} 和 ${cellOf(i)} 之間，充填結束的那一列標上 E。`});
+      }
       if(pendingItem!=null){ curItem=pendingItem; pendingItem=null; }
-      if(curItem==null){ errors.push({msg:`第 ${x.r} 列（${x.t!=null?fmtTime(x.t):""}）是第一趟的開始，但 E 欄沒有填品項。`,fix:"請在該品項第一趟「開始」那一列的 E 欄填入品項。"}); curItem="（未填品項）"; }
+      if(curItem==null){ errors.push({cell:IL+x.r,at:i,title:"這是第一趟的開始，但沒有填品項。",fix:`請在 ${IL}${x.r} 填入品項，例如 D0111。`}); curItem="（未填品項）"; }
       open={i,item:curItem};
     }
     if(x.end){
-      if(x.start){ errors.push({msg:`第 ${x.r} 列同時是開始與結束。`,fix:"開始與結束請標在不同列。"}); open=null; continue; }
-      if(!open){ errors.push({msg:`第 ${x.r} 列有「結束」，但前面沒有對應的「開始」。`,fix:"請補上這一趟的「開始」標記，或刪除多餘的「結束」。"}); continue; }
+      if(!open){
+        const tr=trend(i);
+        if(tr&&tr.d>=3){
+          errors.push({cell:cellOf(i),at:i,key:true,title:`這格標的是「結束」，但前面沒有對應的開始；而且這一列之後溫度上升（${tTxt(tr)}），看起來是「開始」打成了「結束」。`,fix:`請把 ${cellOf(i)} 改成 S。`});
+          if(pendingItem!=null){ curItem=pendingItem; pendingItem=null; }
+          open={i,item:curItem??"（未填品項）"}; continue;
+        }
+        errors.push({cell:cellOf(i),at:i,title:"這格標的是「結束」，但前面沒有對應的「開始」。",fix:`請在前面充填開始的那一列標上 S，或刪除 ${cellOf(i)} 這個多餘的 E。`}); continue;
+      }
       trips.push({s:open.i,e:i,item:open.item}); open=null;
     }
   }
-  if(open) errors.push({msg:`第 ${R[open.i].r} 列有「開始」，但後面沒有「結束」。`,fix:"請補上這一趟的「結束」標記。"});
+  if(open) errors.push({cell:cellOf(open.i),at:open.i,title:"這一趟有開始，但後面沒有「結束」。",fix:"請在這一趟充填結束的那一列標上 E。"});
   // 5. 充填段資料完整性
   const diffs=[]; for(let i=1;i<R.length;i++) if(R[i].t!=null&&R[i-1].t!=null) diffs.push(R[i].t-R[i-1].t);
   diffs.sort((a,b)=>a-b); const step=diffs.length?diffs[Math.floor(diffs.length/2)]:5000;
   // 設備漏記屬非人為因素：不擋下，只把缺失區段記下來，畫在圖上
   for(const tp of trips){
-    if(R[tp.s].t==null||R[tp.e].t==null){ errors.push({msg:`第 ${R[tp.s].r}～${R[tp.e].r} 列這一趟的開始或結束列沒有時間。`,fix:"請把開始／結束標在有時間的那一列。"}); continue; }
+    if(R[tp.s].t==null||R[tp.e].t==null){ errors.push({cell:`${cellOf(tp.s)}～${cellOf(tp.e)}`,title:"這一趟的開始或結束那一列沒有時間。",fix:"請把開始／結束標在有時間的那一列。"}); continue; }
     tp.gaps=[]; let last=-1;
     for(let i=tp.s;i<=tp.e;i++){
       const ok=R[i].v!=null&&R[i].t!=null;
@@ -488,10 +535,10 @@ function analyze(sheets){
       if(last>=0&&(i-last>1||R[i].t-R[last].t>step*1.5)) tp.gaps.push({a:R[last].t,b:R[i].t});
       last=i;
     }
-    if(last<0) errors.push({msg:`第 ${R[tp.s].r}～${R[tp.e].r} 列這一趟完全沒有溫度資料。`,fix:"請確認開始／結束標記的位置。"});
+    if(last<0) errors.push({cell:`${cellOf(tp.s)}～${cellOf(tp.e)}`,title:"這一趟完全沒有溫度資料。",fix:"請確認開始／結束標記的位置。"});
   }
-  if(!trips.length&&!errors.length) errors.push({msg:"沒有找到完整的充填段。",fix:"請確認開始／結束標記。"});
-  if(errors.length) return {errors};
+  if(!trips.length&&!errors.length) errors.push({cell:L+" 欄",title:"沒有找到完整的充填段。",fix:"請確認開始／結束標記。"});
+  if(errors.length) return {errors,sheet:sh.name,R};
   // 6. 統計
   const below = v => std.op==="gt" ? v<=std.value : v<std.value;
   const groups=[];
@@ -628,10 +675,23 @@ const LEGEND=`<div class="legend"><span><i class="lg-band"></i>充填段</span><
 function setStep(n){ document.querySelectorAll(".steps .s").forEach((s,i)=>s.classList.toggle("on",i<n)); }
 function showError(fileName,res){
   setStep(1);
-  $("#out").innerHTML=`<section class="card err"><div class="eh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 7v6"/><path d="M12 16.5v.5"/></svg><h2>檔案需要修正，暫時無法產生日報</h2></div>
-    <div class="lead">檔案：${esc(fileName)}　｜　請現場品保依下列項目確認、修正後重新上傳。</div>
-    <ol>${res.errors.map(e=>`<li>${esc(e.msg)}<div class="fix">→ ${esc(e.fix)}</div></li>`).join("")}</ol></section>`;
-  $("#out").scrollIntoView({behavior:"smooth",block:"start"});
+  const R=res.R||[]; const n=res.errors.length;
+  const rows=res.errors.map((e,k)=>{ const p=e.at!=null?R[e.at]:null;
+    const cell=e.cell&&/^[A-Z]+\d+$/.test(e.cell)?`<button type="button" class="cellchip" data-cell="${esc(e.cell)}" title="點一下複製">${esc(e.cell)}</button>`:`<span class="cellplain">${esc(e.cell||"—")}</span>`;
+    return `<tr class="${e.key?"key":""}"><td class="no">${k+1}</td><td>${cell}</td>
+      <td class="num">${p&&p.t!=null?fmtTime(p.t):"—"}</td><td class="num">${p&&p.v!=null?p.v.toFixed(1)+"°C":"—"}</td>
+      <td class="what">${esc(e.title)}</td><td class="how">${esc(e.fix)}</td></tr>`; }).join("");
+  $("#out").innerHTML=`<section class="card err" id="errCard" tabindex="-1">
+    <div class="eh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 7v6"/><path d="M12 16.5v.5"/></svg>
+      <h2>發現 ${n} 個問題，暫時無法產生日報</h2></div>
+    <div class="lead">檔案：<b>${esc(fileName)}</b>${res.sheet?`　｜　工作表：<b>${esc(res.sheet)}</b>`:""}</div>
+    <div class="errtip">在 Excel 按 <kbd>Ctrl</kbd> + <kbd>G</kbd>，輸入下表的<b>儲存格位置</b>（例如 ${esc((res.errors.find(e=>/^[A-Z]+\d+$/.test(e.cell||""))||{cell:"D5313"}).cell)}），按 Enter 就會直接跳到那一格。修正後存檔，再重新上傳。</div>
+    <div class="errwrap"><table class="errtable"><thead><tr><th>#</th><th>儲存格</th><th>時間</th><th>溫度</th><th>問題</th><th>怎麼改</th></tr></thead><tbody>${rows}</tbody></table></div>
+    <div class="errmsg" id="copyMsg" role="status"></div></section>`;
+  document.querySelectorAll(".cellchip").forEach(b=>b.addEventListener("click",async()=>{ const c=b.dataset.cell; let ok=false;
+    try{ await navigator.clipboard.writeText(c); ok=true; }catch(e){}
+    $("#copyMsg").textContent=ok?`已複製 ${c}，到 Excel 按 Ctrl + G 貼上即可跳到那一格。`:`儲存格位置：${c}`; }));
+  const card=$("#errCard"); card.scrollIntoView({behavior:"smooth",block:"start"}); try{ card.focus({preventScroll:true}); }catch(e){}
 }
 function showResult(A){
   const total=A.trips.length;
@@ -687,7 +747,7 @@ async function handleFile(f){
     try{ const h=await crypto.subtle.digest("SHA-256",buf); res.hash=[...new Uint8Array(h)].map(b=>b.toString(16).padStart(2,"0")).join(""); }catch(e){ res.hash=null; }
     const tv=res.R.filter(x=>x.v!=null&&x.t!=null); res.recFrom=tv[0].t; res.recTo=tv[tv.length-1].t;
     STATE=res; $("#uploadCard").hidden=true; $("#guide").hidden=true; setStep(2); showResult(res); window.scrollTo(0,0);
-  }catch(e){ console.error(e); showError(f.name,{errors:[{msg:"檔案無法讀取："+e.message,fix:"請確認是記錄器匯出、並已標註的 Excel 檔。"}]}); }
+  }catch(e){ console.error(e); showError(f.name,{errors:[{cell:"—",title:"檔案無法讀取："+e.message,fix:"請確認是記錄器匯出、並已標註的 Excel 檔。"}]}); }
   finally{ $("#busy").classList.remove("on"); }
 }
 
