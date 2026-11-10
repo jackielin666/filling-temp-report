@@ -279,7 +279,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px}
         <div class="rule"><span class="rn">1</span><div><h3>D 欄標註每一趟的開始與結束</h3><p>開始、結束要成對，標在充填開始與結束的那一列。以下寫法都可以，大小寫不拘：</p>
           <div class="chips"><span class="chip">開始</span><span class="chip">S</span><span class="chip">START</span><span class="chip e">結束</span><span class="chip e">E</span><span class="chip e">END</span></div></div></div>
         <div class="rule c3"><span class="rn">2</span><div><h3>E 欄填品項</h3><p>只填在該品項<b>第一趟的開始列</b>；同品項後面幾趟不用再填，換品項時再填新品項。</p></div></div>
-        <div class="foot">標準值固定為 <b>≥80°C</b>，D2 和標題列（基準值、品項）都不用填。<br>D 欄第 3 列以下只放開始／結束標記，其他文字或數字請刪除。<br>記錄器漏記的時段不會擋下，會在圖上標示「資料缺失」。</div>
+        <div class="foot">標準值固定為 <b>≥80°C</b>，D2 和標題列（基準值、品項）都不用填。<br>D 欄第 3 列以下只放開始／結束標記，其他文字或數字請刪除。<br>記錄器漏記的時段不會擋下，會在圖上標示「資料缺失」。<br><b>另一套記錄系統</b>（有「讀取日期、讀取時間、溫度」欄位）：S/E 標在 <b>H 欄</b>、品項填在 <b>I 欄</b>，由上往下標即可，系統會自動辨識。</div>
       </div>
     </div>
   </section>
@@ -428,10 +428,25 @@ const isStart = v => v!=null && CFG.startTokens.includes(normTok(v));
 const isEnd   = v => v!=null && CFG.endTokens.includes(normTok(v));
 
 function findCols(sh){
-  const h=sh.rows.get(1)||[]; const col={date:0,time:1,temp:2,mark:3,item:4};
-  h.forEach((x,i)=>{ if(x==null) return; const s=half(String(x)).trim();
-    if(/日期/.test(s)) col.date=i; else if(/時間/.test(s)) col.time=i;
-    else if(/^AI\d|溫度/i.test(s)) col.temp=i; else if(/基準|標準|標記/.test(s)) col.mark=i; else if(/品項|品名/.test(s)) col.item=i; });
+  // 自動判斷：前 10 列中，含「日期／時間／溫度／AI1」最多的那一列是標題列
+  let hr=1, best=0;
+  for(let r=1;r<=10;r++){ const row=sh.rows.get(r)||[]; let n=0;
+    row.forEach(x=>{ if(x!=null&&/日期|時間|溫度|^AI\d/i.test(half(String(x)).trim())) n++; });
+    if(n>best){best=n;hr=r;} }
+  const h=sh.rows.get(hr)||[];
+  const col={hr,date:0,time:1,temp:2,mark:null,item:null,kind:"A"};
+  let last=-1;
+  h.forEach((x,i)=>{ if(x==null) return; const s=half(String(x)).trim(); if(!s) return;
+    if(/^(讀取)?日期$/.test(s)) col.date=i;
+    else if(/^(讀取)?時間$/.test(s)) col.time=i;
+    else if(/^(AI\d+|溫度)(\s*[\(（].*[\)）])?$/i.test(s)) col.temp=i;
+    else if(/基準|標準|標記/.test(s)) col.mark=i;
+    else if(/品項|品名/.test(s)) col.item=i;
+    if(!/基準|標準|標記|品項|品名/.test(s)) last=Math.max(last,i); });
+  if(h.some(x=>x!=null&&/讀取日期/.test(String(x)))) col.kind="B";
+  // S/E 放在資料最右邊的下一欄（A 系統＝D 欄、B 系統＝H 欄），品項再下一欄
+  if(col.mark==null) col.mark=Math.max(last+1,3);
+  if(col.item==null) col.item=col.mark+1;
   return col;
 }
 function colLetter(i){ let s="",n=i+1; while(n>0){ const m=(n-1)%26; s=String.fromCharCode(65+m)+s; n=Math.floor((n-1)/26); } return s; }
@@ -450,11 +465,12 @@ function analyze(sheets){
   const errors=[];
   // 1. 找出有 S/E 標註的工作表
   const cand=sheets.map(sh=>{ const col=findCols(sh); let n=0, temps=0;
-    for(const [r,row] of sh.rows){ if(r<3) continue; if(isStart(row[col.mark])||isEnd(row[col.mark])) n++; if(typeof row[col.temp]==="number") temps++; }
+    for(const [r,row] of sh.rows){ if(r<=col.hr) continue; if(isStart(row[col.mark])||isEnd(row[col.mark])) n++; if(typeof row[col.temp]==="number") temps++; }
     return {sh,col,n,temps}; });
   const marked=cand.filter(c=>c.n>0);
   if(marked.length===0){
-    return {errors:[{cell:"D 欄",title:"檔案中找不到任何「開始／結束」標記。",fix:"請依現場充填紀錄，在 D 欄每一趟開始的那一列標 S、結束的那一列標 E。"}]};
+    const bc=cand.slice().sort((a,b)=>b.temps-a.temps)[0]; const ML=bc?colLetter(bc.col.mark):"D";
+    return {errors:[{cell:ML+" 欄",title:"檔案中找不到任何「開始／結束」標記。",fix:`請依現場充填紀錄，在 ${ML} 欄每一趟開始的那一列標 S、結束的那一列標 E。`}]};
   }
   if(marked.length>1){
     return {errors:[{cell:"—",title:`有 ${marked.length} 個工作表都有開始／結束標記：${marked.map(c=>"「"+c.sh.name+"」").join("、")}。`,fix:"請只保留一個工作表的標記（包含隱藏的工作表），避免系統讀錯資料。"}]};
@@ -463,15 +479,15 @@ function analyze(sheets){
   // 2. 標準值：固定 ≥80°C（D2 不用填，填了也不讀）
   const std={value:CFG.stdValue,op:"ge",label:"≥"+CFG.stdValue};
   // 3. 逐列讀資料
-  const R=[]; let baseDate=null, unknown=[], badDate=[];
-  const rnums=[...sh.rows.keys()].filter(r=>r>=3).sort((a,b)=>a-b);
+  let R=[]; let baseDate=null, unknown=[], badDate=[];
+  const rnums=[...sh.rows.keys()].filter(r=>r>col.hr).sort((a,b)=>a-b);
   for(const r of rnums){
     const row=sh.rows.get(r);
     const tRaw=row[col.time], dRaw=row[col.date];
     let t=null; const pt=parseTime(tRaw);
     if(pt&&typeof pt==="object") t=pt.abs;
     else if(pt!=null){ const d=parseDate(dRaw); if(d!=null){ t=d+pt; baseDate=baseDate??d; } else if(dRaw!=null) badDate.push(r); }
-    if(t==null && tRaw==null && dRaw==null && row[col.temp]==null) continue; // 空列
+    if(tRaw==null && dRaw==null) continue; // 空列或單位列（例如「瞬間值」）
     const v=typeof row[col.temp]==="number"?row[col.temp]:null;
     const mk=row[col.mark], it=row[col.item];
     if(mk!=null && !isStart(mk) && !isEnd(mk)) unknown.push({r,mk});
@@ -485,9 +501,13 @@ function analyze(sheets){
     const vals=[...new Set(unknown.map(u=>String(u.mk)))].slice(0,4).map(s=>"「"+s+"」").join("、");
     errors.push({cell:cellRanges(L,unknown.map(u=>u.r)),title:[`${L} 欄有無法辨識的內容：${vals}`,`${L} 欄只能放開始／結束標記（S／E）`],fix:`${L} 欄（第 3 列以下）只能放開始／結束標記（S／E），請把這些內容刪除。`});
   }
-  // 依溫度走勢判斷：這一列之後約 2 分鐘，溫度上升或下降多少
-  const trend=i=>{ const p=R[i]; if(p.t==null||p.v==null) return null;
-    for(let j=i+1;j<R.length;j++){ const q=R[j]; if(q.t==null||q.v==null) continue; if(q.t-p.t>=120000) return {from:p.v,to:q.v,d:q.v-p.v}; }
+  // 依時間排序：有些記錄器是新→舊排列（B 系統），標記仍依畫面上由上往下的順序配對
+  const ord=R.map((x,i)=>i); { let lt=-Infinity; const key=R.map(x=>{ if(x.t!=null) lt=x.t; return lt; }); ord.sort((a,b)=>key[a]-key[b]||a-b); }
+  const pos=new Array(R.length); ord.forEach((ri,k)=>pos[ri]=k);
+  const RS=ord.map(i=>R[i]);
+  // 依溫度走勢判斷：這一列之後（依時間）約 2 分鐘，溫度上升或下降多少
+  const trend=i=>{ const k=pos[i], p=RS[k]; if(p.t==null||p.v==null) return null;
+    for(let j=k+1;j<RS.length;j++){ const q=RS[j]; if(q.t==null||q.v==null) continue; if(q.t-p.t>=120000) return {from:p.v,to:q.v,d:q.v-p.v}; }
     return null; };
   const tTxt=tr=>`${tr.from.toFixed(1)} → ${tr.to.toFixed(1)}°C`;
   // 4. 配對開始／結束、品項
@@ -526,6 +546,11 @@ function analyze(sheets){
     }
   }
   if(open) errors.push({cell:cellOf(open.i),at:open.i,title:["這一趟有「開始」","後面沒有「結束」"],fix:"請在這一趟充填結束的那一列標上 E。"});
+  // 換成依時間排序後的位置
+  for(const tp of trips){ const a=pos[tp.s], b=pos[tp.e]; tp.s=Math.min(a,b); tp.e=Math.max(a,b); }
+  trips.sort((x,y)=>x.s-y.s);
+  for(const e of errors) if(e.at!=null) e.at=pos[e.at];
+  R=RS;
   // 5. 充填段資料完整性
   const diffs=[]; for(let i=1;i<R.length;i++) if(R[i].t!=null&&R[i-1].t!=null) diffs.push(R[i].t-R[i-1].t);
   diffs.sort((a,b)=>a-b); const step=diffs.length?diffs[Math.floor(diffs.length/2)]:5000;
@@ -555,7 +580,7 @@ function analyze(sheets){
   }
   const firstT=R.find(x=>x.v!=null)?.t ?? R[0].t;
   const hasGaps=trips.some(t=>t.gaps.length);
-  return {errors:[],sheet:sh.name,std,R,trips,groups,below,step,hasGaps,date:fmtDate(Math.floor(firstT/DAY)*DAY)};
+  return {errors:[],sheet:sh.name,kind:col.kind,std,R,trips,groups,below,step,hasGaps,date:fmtDate(Math.floor(firstT/DAY)*DAY)};
 }
 
 
@@ -847,7 +872,7 @@ function buildPages(A){
   F.newPage();
   // ---- 基本資料
   F.add(92,(ctx,y)=>{
-    const cells=[["生產日期",A.date],["量測位置",CFG.point],["判定標準",`${A.std.label} °C`],
+    const cells=[["生產日期",A.date],["量測位置",A.kind==="B"?"溫度記錄系統 B（讀取日期／讀取時間）":CFG.point],["判定標準",`${A.std.label} °C`],
                  ["記錄期間",`${fmtTime(A.recFrom)} – ${fmtTime(A.recTo)}`],["取樣間隔",`${Math.round(A.step/1000)} 秒`],["原始檔名",A.fileName]];
     ctx.fillStyle="#F7F8FA"; ctx.fillRect(M,y,CW,80); ctx.strokeStyle=C.line; ctx.lineWidth=.8; ctx.strokeRect(M,y,CW,80);
     const cw=CW/3; ctx.fillStyle=C.line; ctx.fillRect(M,y+40,CW,.8); ctx.fillRect(M+cw,y,.8,80); ctx.fillRect(M+2*cw,y,.8,80);
