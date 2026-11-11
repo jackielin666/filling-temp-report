@@ -118,6 +118,20 @@ kbd{display:inline-block;border:1px solid #C9C9C2;border-bottom-width:2px;border
 
 /* ---------- 結果 ---------- */
 .filebar{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px}
+.stickybar{position:sticky;top:env(safe-area-inset-top,0px);z-index:6;padding:14px 22px 12px;box-shadow:0 6px 18px rgba(44,44,42,.08)}
+.itemnav{display:flex;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--line);overflow-x:auto;scrollbar-width:thin}
+.inav{display:inline-flex;align-items:center;gap:8px;flex:none;padding:6px 12px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--ink);text-decoration:none;font-size:14px;white-space:nowrap}
+.inav:hover{border-color:var(--accent)}
+.inav b{color:var(--accent);font-weight:700}
+.inav span{color:var(--sub)}
+.inav i{font-style:normal;color:var(--red);font-weight:700;font-size:13px}
+.inav.on{background:var(--accent-soft);border-color:var(--accent)}
+.sumtable tr.gfirst td{border-top:1px solid #D6D6D0}
+.glink{color:var(--accent);font-weight:700;text-decoration:none}
+.glink:hover{text-decoration:underline}
+.pdfmsg:empty{display:none}
+table.trips td,table.trips th{white-space:nowrap}
+@media (max-width:640px){ .stickybar{padding:10px 14px} .filebar .meta{gap:4px 16px} .filebar .meta b{font-size:14px} .itemnav{margin-top:8px;padding-top:8px} }
 .filebar .meta{display:flex;flex-wrap:wrap;gap:6px 26px;font-size:14px}
 .filebar .meta div{display:flex;flex-direction:column;line-height:1.35}
 .filebar .meta span{color:var(--sub);font-size:12px} .filebar .meta b{color:var(--ink);font-weight:600;font-size:15px}
@@ -724,13 +738,20 @@ function showError(fileName,res){
 }
 function showResult(A){
   const total=A.trips.length;
-  let html=`<section class="card"><div class="filebar">
+  const redAll=A.trips.reduce((a,t)=>a+t.red.length,0);
+  let html=`<section class="card stickybar" id="fileBar"><div class="filebar">
     <div class="meta"><div><span>檔案</span><b>${esc(A.fileName)}</b></div><div><span>生產日期</span><b class="num">${A.date}</b></div>
     <div><span>標準</span><b>${A.std.label}°C</b></div><div><span>品項／趟數</span><b class="num">${A.groups.length} 品項／${total} 趟</b></div></div>
-    <div class="btns"><button id="again">重新上傳</button><button class="primary" id="pdf">下載日報 PDF</button></div><div id="pdfMsg" class="pdfmsg" role="status"></div></div></section>`;
+    <div class="btns"><button id="again">重新上傳</button><button class="primary" id="pdf">下載日報 PDF</button></div><div id="pdfMsg" class="pdfmsg" role="status"></div></div>
+    <nav class="itemnav" aria-label="品項">${A.groups.map((g,gi)=>{ const r=g.trips.reduce((a,t)=>a+t.red.length,0);
+      return `<a href="#item${gi}" class="inav${r?" hasred":""}" data-gi="${gi}"><b>${esc(g.item)}</b><span class="num">${g.trips.length} 趟</span>${r?`<i class="num" title="低於標準筆數">● ${r}</i>`:""}</a>`; }).join("")}</nav></section>
+    <section class="card"><div class="item-h"><h2 style="color:var(--ink)">充填摘要</h2>
+      <span class="info num">${A.groups.length} 個品項、${total} 趟充填</span>${redAll?`<span class="warn">● 低於標準 ${redAll} 筆</span>`:""}</div>
+      <div class="tablewrap"><table class="trips num sumtable"><tr><th>品項</th><th>趟次</th><th>開始</th><th>結束</th><th>時長</th><th>筆數</th><th>最高 °C</th><th>最低 °C</th><th>平均 °C</th><th>低於標準</th></tr>
+      ${A.groups.map((g,gi)=>g.trips.map((t,k)=>`<tr class="${k===0?"gfirst":""}"><td>${k===0?`<a href="#item${gi}" class="glink" data-gi="${gi}">${esc(g.item)}</a>`:""}</td><td>第${t.n}趟</td><td>${fmtTime(A.R[t.s].t)}</td><td>${fmtTime(A.R[t.e].t)}</td><td>${fmtDur(A.R[t.e].t-A.R[t.s].t)}</td><td>${t.cnt}</td><td>${f1(t.max)}</td><td class="${t.red.length?"bad":""}">${f1(t.min)}</td><td>${f1(t.avg)}</td><td class="${t.red.length?"bad":""}">${t.red.length}</td></tr>`).join("")).join("")}</table></div></section>`;
   A.groups.forEach((g,gi)=>{
     const ts=g.trips, red=ts.reduce((a,t)=>a+t.red.length,0);
-    html+=`<section class="card"><div class="item-h"><h2>${esc(g.item)}</h2>
+    html+=`<section class="card itemsec" id="item${gi}"><div class="item-h"><h2>${esc(g.item)}</h2>
       <span class="info num">${ts.length} 趟　${fmtTime(A.R[ts[0].s].t)} – ${fmtTime(A.R[ts[ts.length-1].e].t)}</span>
       ${red?`<span class="warn">● 低於標準 ${red} 筆</span>`:""}</div>${LEGEND}
       <div class="chart" id="c${gi}"></div>
@@ -741,6 +762,14 @@ function showResult(A){
       <div class="zoom" id="z${gi}" hidden></div></section>`;
   });
   $("#out").innerHTML=html; $("#out").classList.toggle("has-gaps",!!A.hasGaps);
+  // 品項快速跳轉（避開固定標題列的高度）
+  const jump=gi=>{ const el=$("#item"+gi); if(!el) return; const h=$("#fileBar").offsetHeight+12;
+    window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-h,behavior:"smooth"}); };
+  document.querySelectorAll(".inav,.glink").forEach(a=>a.addEventListener("click",e=>{ e.preventDefault(); jump(+a.dataset.gi); }));
+  // 捲動時標示目前看到的品項
+  try{ const navs=[...document.querySelectorAll(".inav")];
+    const io=new IntersectionObserver(es=>{ es.forEach(en=>{ if(en.isIntersecting){ const gi=en.target.id.slice(4); navs.forEach(n=>n.classList.toggle("on",n.dataset.gi===gi)); } }); },{rootMargin:"-45% 0px -50% 0px"});
+    document.querySelectorAll(".itemsec").forEach(sec=>io.observe(sec)); }catch(e){}
   A.groups.forEach((g,gi)=>mountChart($("#c"+gi),A,{i0:g.trips[0].s,i1:g.trips[g.trips.length-1].e,trips:g.trips,labels:true},330));
   document.querySelectorAll("[data-z]").forEach(b=>b.addEventListener("click",()=>{
     const gi=+b.dataset.z, z=$("#z"+gi), g=A.groups[gi];
